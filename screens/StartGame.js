@@ -50,11 +50,12 @@ export default class StartGame extends Component {
       () => {
         this.receive();
         this.update();
+        this.orderPlayers();
       }
     );
 
     BackHandler.addEventListener("hardwareBackPress", () =>
-      this.props.navigation.navigate("WelcomeScreen")
+      this.props.navigation.navigate("GameSelect")
     );
   }
 
@@ -65,6 +66,21 @@ export default class StartGame extends Component {
   //     alert("ERROR 3 " + error);
   //   }
   // }
+
+  orderPlayers = () => {
+    let array = [];
+    let playersMap = new Map();
+    for (let i in this.state.players) {
+      if (!playersMap.has(this.state.players[i].userKey)) {
+        array.push(this.state.players[i]);
+        playersMap.set(this.state.players[i].userKey, 1);
+      }
+    }
+
+    console.log("players ");
+    console.log(playersMap);
+    this.setState({ players: array });
+  };
 
   receive = async () => {
     try {

@@ -14,6 +14,8 @@ import * as firebase from "firebase/app";
 import("firebase/auth");
 import("firebase/database");
 
+let code = "game";
+
 export default class CreateGame extends Component {
   constructor(props) {
     super(props);
@@ -36,12 +38,14 @@ export default class CreateGame extends Component {
 
   create = async () => {
     try {
-      const key = await firebase.database().ref("users").push().key;
-      await firebase
-        .database()
-        .ref("users")
-        .child(key)
-        .set({ name: this.state.user.name });
+      //   const key = await firebase.database().ref("users").push().key;
+      //   await firebase
+      //     .database()
+      //     .ref("users")
+      //     .child(key)
+      //     .set({ name: this.state.user.name });
+
+      const key = this.state.user.key;
 
       const gameID = await firebase.database().ref("game").push().key;
       const playerID = await firebase

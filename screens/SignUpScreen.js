@@ -23,10 +23,11 @@ export default class LoginScreen extends Component {
   }
 
   signUp = async () => {
+    let name = this.state.name;
     if (this.state.email && this.state.password && this.state.name) {
       this.setState({ isLoading: true });
       try {
-        const response = await firebase
+        let response = await firebase
           .auth()
           .createUserWithEmailAndPassword(
             this.state.email,
@@ -34,11 +35,11 @@ export default class LoginScreen extends Component {
           );
 
         if (response) {
+          console.log(name);
           await firebase
             .auth()
-            .currentUser.updateProfile({ displayName: this.state.name }, () =>
-              this.props.navigation.navigate("LoadingScreen")
-            );
+            .currentUser.updateProfile({ displayName: name });
+          this.props.navigation.navigate("LoadingScreen");
         }
       } catch (error) {
         this.setState({ isLoading: false });
@@ -55,7 +56,8 @@ export default class LoginScreen extends Component {
           alert("Enter a valid email address");
           return;
         }
-        alert("Problem in signing user. Please try again.");
+        // alert("Problem in signing user. Please try again.");
+        alert(error);
       }
     } else {
       alert("Enter details to signup");

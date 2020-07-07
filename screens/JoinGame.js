@@ -8,6 +8,8 @@ import {
   BackHandler,
 } from "react-native";
 
+import { snapshotToArray } from "../helpers/snapshot";
+
 import * as firebase from "firebase/app";
 import("firebase/auth");
 import("firebase/database");
@@ -51,12 +53,14 @@ export default class JoinGame extends Component {
         return;
       }
 
-      const key = await firebase.database().ref("users").push().key;
-      await firebase
-        .database()
-        .ref("users")
-        .child(key)
-        .set({ name: this.state.user.name });
+      //   const key = await firebase.database().ref("users").push().key;
+      //   await firebase
+      //     .database()
+      //     .ref("users")
+      //     .child(key)
+      //     .set({ name: this.state.user.name });
+
+      const key = this.state.user.key;
 
       const gameID = gameDetails.val().gameID;
       const admin = gameDetails.val().userKey;
@@ -69,6 +73,7 @@ export default class JoinGame extends Component {
         .once("value");
 
       const players = snapshotToArray(playersSnap);
+      players.push({ name: this.state.user.name, userKey: key, ready: false });
       console.log(players);
 
       const playerID = await firebase
