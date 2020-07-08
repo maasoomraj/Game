@@ -13,6 +13,7 @@ import LoadingScreen from "./screens/LoadingScreen";
 import GameSelect from "./screens/GameSelect";
 import JoinGame from "./screens/JoinGame";
 import CreateGame from "./screens/CreateGame";
+import GameScreen from "./screens/GameScreen";
 
 class App extends React.Component {
   constructor() {
@@ -39,6 +40,7 @@ const AppSwitchNavigator = createSwitchNavigator({
   GameSelect,
   JoinGame,
   CreateGame,
+  GameScreen,
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);

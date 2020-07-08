@@ -64,6 +64,13 @@ export default class CreateGame extends Component {
 
       await firebase
         .database()
+        .ref("game")
+        .child(gameID)
+        .child("gameStatus")
+        .set({ start: false });
+
+      await firebase
+        .database()
         .ref("gameMap")
         .child(code)
         .set({ name: this.state.user.name, userKey: key, gameID: gameID }, () =>
