@@ -10,6 +10,7 @@ import {
 
 import { snapshotToArray } from "../helpers/snapshot";
 import { store } from "../helpers/redux-store";
+import { LinearGradient } from "expo-linear-gradient";
 
 import * as firebase from "firebase/app";
 import("firebase/auth");
@@ -130,23 +131,34 @@ export default class JoinGame extends Component {
 
   render() {
     return (
-      <View style={{ marginTop: StatusBar.currentHeight, flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+          paddingTop: StatusBar.currentHeight,
+          backgroundColor: "#130B21",
+        }}
+      >
         <View
           style={{
             margin: 20,
             justifyContent: "center",
             alignItems: "center",
-            height: 50,
-            borderBottomColor: "#000",
+            height: 140,
             borderBottomWidth: 0.5,
+            borderColor: "#EC3D6C",
           }}
         >
-          <Text style={{ fontSize: 24, fontWeight: "bold" }}>Join Game</Text>
+          <Text style={{ fontSize: 50, fontWeight: "bold", color: "#EC3D6C" }}>
+            Join Game
+          </Text>
         </View>
 
         <View style={{ flex: 1, margin: 40 }}>
+          {/* TextInput */}
+
           <TextInput
             placeholder="Enter Game Code"
+            placeholderTextColor="#eee"
             value={this.state.gameCode}
             onChangeText={(text) => this.setState({ gameCode: text })}
             style={{
@@ -155,28 +167,44 @@ export default class JoinGame extends Component {
               marginVertical: 20,
               paddingLeft: 20,
               height: 50,
-              fontSize: 18,
+              fontSize: 20,
+              color: "#eee",
             }}
           />
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <TouchableOpacity
+
+          {/* Join Button */}
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 20,
+            }}
+          >
+            <LinearGradient
+              colors={["#F0B342", "#F0B342"]}
+              // colors={["#7E1A20", "#7E1A20", "#9F2325", "#B5292A", "#C52E2B"]}
               style={{
-                width: 70,
-                height: 70,
-                borderRadius: 35,
-                alignItems: "center",
                 justifyContent: "center",
-                borderWidth: 0.7,
-                borderColor: "#000",
+                alignItems: "center",
+                width: 100,
+                height: 50,
+                borderRadius: 10,
               }}
-              onPress={this.join}
             >
-              <Text
-                style={{ fontSize: 30, fontWeight: "normal", color: "#000" }}
+              <TouchableOpacity
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                onPress={this.join}
               >
-                →
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{ fontSize: 24, fontWeight: "normal", color: "#000" }}
+                >
+                  Join
+                </Text>
+              </TouchableOpacity>
+            </LinearGradient>
           </View>
         </View>
 
@@ -189,7 +217,9 @@ export default class JoinGame extends Component {
             flexDirection: "row",
           }}
         >
-          <Text>Don't have a Game Code - </Text>
+          <Text style={{ color: "#EC3D6C", fontSize: 16 }}>
+            Donot have a Game Code -{" "}
+          </Text>
           <TouchableOpacity
             onPress={() =>
               this.props.navigation.navigate("CreateGame", {
@@ -197,7 +227,11 @@ export default class JoinGame extends Component {
               })
             }
           >
-            <Text style={{ fontWeight: "bold" }}>Create Game</Text>
+            <Text
+              style={{ fontWeight: "bold", color: "#EC3D6C", fontSize: 16 }}
+            >
+              Create Game
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

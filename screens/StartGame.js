@@ -215,7 +215,7 @@ export default class StartGame extends Component {
       >
         <Image
           source={require("../assets/icons8-male-user-96.png")}
-          style={{ width: 90, height: 90 }}
+          style={{ width: 80, height: 80 }}
         />
         <View
           style={{
@@ -225,7 +225,16 @@ export default class StartGame extends Component {
             justifyContent: "space-around",
           }}
         >
-          <Text>{item.name}</Text>
+          <Text
+            style={{
+              color: "#EC3D6C",
+              fontSize: 13,
+              paddingVertical: 5,
+              paddingLeft: 5,
+            }}
+          >
+            {item.name}
+          </Text>
 
           {item.ready ? (
             <Text
@@ -250,22 +259,35 @@ export default class StartGame extends Component {
   render() {
     return (
       this.state.playersLoaded && (
-        <View style={{ marginTop: StatusBar.currentHeight, flex: 1 }}>
+        <View
+          style={{
+            flex: 1,
+            paddingTop: StatusBar.currentHeight,
+            backgroundColor: "#130B21",
+          }}
+        >
           <View
             style={{
               margin: 20,
               justifyContent: "center",
               alignItems: "center",
-              height: 100,
-              borderBottomColor: "#000",
+              height: 140,
               borderBottomWidth: 0.5,
+              borderColor: "#EC3D6C",
             }}
           >
-            <Text style={{ fontSize: 24, fontWeight: "bold" }}>
+            <Text
+              style={{ fontSize: 24, fontWeight: "bold", color: "#EC3D6C" }}
+            >
               Game Code - "{this.state.gameCode}"
             </Text>
             <Text
-              style={{ fontSize: 14, fontWeight: "500", fontStyle: "italic" }}
+              style={{
+                fontSize: 14,
+                fontWeight: "500",
+                fontStyle: "italic",
+                color: "#eee",
+              }}
             >
               Share with your friends.
             </Text>

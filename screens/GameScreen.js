@@ -9,6 +9,7 @@ import {
 } from "react-native";
 
 import { store } from "../helpers/redux-store";
+import questions from "../helpers/questions/friends";
 
 import * as firebase from "firebase/app";
 import("firebase/auth");
@@ -56,33 +57,6 @@ export default class GameScreen extends Component {
     );
   }
 
-  questions = (name, number) => {
-    switch (number) {
-      case 0:
-        return `What do you hate about ${name} ?`;
-      case 1:
-        return `What is ${name}'s favourite colour ?`;
-      case 2:
-        return `What is ${name}'s bf/gf name ?`;
-      case 3:
-        return `What is ${name}'s age ?`;
-      case 4:
-        return `What is ${name}'s favourite food ?`;
-      case 5:
-        return `What is ${name}'s pet name ?`;
-      case 6:
-        return `What is ${name}'s darkest secret ?`;
-      case 7:
-        return `What is ${name}'s father's name ?`;
-      case 8:
-        return `What is ${name}'s favourite place ?`;
-      case 9:
-        return `Who is ${name} to you ?`;
-      case 10:
-        return `What is ${name}'s greatest fear ?`;
-    }
-  };
-
   questionMake = async () => {
     if (this.state.user.key === this.state.admin) {
       try {
@@ -92,11 +66,11 @@ export default class GameScreen extends Component {
           .child(this.state.gameID)
           .child("question")
           .set({
-            question: this.questions(
+            question: questions(
               this.state.players[
                 Math.floor(Math.random() * this.state.players.length)
               ].name,
-              Math.floor(Math.random() * 10)
+              Math.floor(Math.random() * 31)
             ),
           });
       } catch (error) {
@@ -166,29 +140,46 @@ export default class GameScreen extends Component {
 
   render() {
     return (
-      <View style={{ marginTop: StatusBar.currentHeight, flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+          paddingTop: StatusBar.currentHeight,
+          backgroundColor: "#130B21",
+        }}
+      >
         <View
           style={{
             margin: 20,
             justifyContent: "center",
             alignItems: "center",
-            height: 100,
-            borderBottomColor: "#000",
+            minHeight: 100,
             borderBottomWidth: 0.5,
-            backgroundColor: "#F5F2F0",
+            borderColor: "#EC3D6C",
           }}
         >
-          <Text style={{ fontSize: 22, fontWeight: "500", padding: 20 }}>
+          <Text
+            style={{
+              fontSize: 22,
+              fontWeight: "bold",
+              color: "#EC3D6C",
+              paddingHorizontal: 10,
+            }}
+          >
             {this.state.question}
           </Text>
         </View>
         <TextInput
           style={{
             margin: 20,
-            height: 400,
+            height: 200,
             borderWidth: 0.5,
             borderColor: "#000",
+            borderColor: "#eee",
+            color: "#eee",
+            padding: 10,
           }}
+          placeholder="Enter your answer"
+          textAlignVertical="top"
           multiline={true}
           value={this.state.answer}
           onChangeText={(text) => this.setState({ answer: text })}
@@ -207,7 +198,7 @@ export default class GameScreen extends Component {
               justifyContent: "center",
             }}
           >
-            <Text>Submit</Text>
+            <Text style={{ fontWeight: "bold" }}>Submit</Text>
           </TouchableOpacity>
         </View>
       </View>

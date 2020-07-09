@@ -147,6 +147,8 @@ export default class LeaderBoard extends Component {
             borderColor: "#000",
             borderWidth: 0.4,
             minHeight: 50,
+            backgroundColor: "#C27AC0",
+            borderRadius: 30,
           }}
         >
           <View
@@ -156,7 +158,7 @@ export default class LeaderBoard extends Component {
               alignItems: "center",
             }}
           >
-            <Text>
+            <Text style={{ fontSize: 14, fontWeight: "bold" }}>
               {item.name} - {item.point}
             </Text>
           </View>
@@ -167,20 +169,32 @@ export default class LeaderBoard extends Component {
 
   render() {
     return (
-      <View style={{ marginTop: StatusBar.currentHeight, flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+          paddingTop: StatusBar.currentHeight,
+          backgroundColor: "#130B21",
+        }}
+      >
         <View
           style={{
             margin: 20,
             justifyContent: "center",
             alignItems: "center",
-            height: 100,
-            borderBottomColor: "#000",
+            minHeight: 100,
             borderBottomWidth: 0.5,
-            backgroundColor: "#F5E7C6",
+            borderColor: "#EC3D6C",
           }}
         >
-          <Text style={{ fontSize: 22, fontWeight: "500", padding: 20 }}>
-            Current LeaderBoard
+          <Text
+            style={{
+              fontSize: 22,
+              fontWeight: "bold",
+              color: "#EC3D6C",
+              paddingHorizontal: 10,
+            }}
+          >
+            LeaderBoard
           </Text>
         </View>
         <FlatList
@@ -188,6 +202,20 @@ export default class LeaderBoard extends Component {
           renderItem={({ item }, index) => this.playerDisplay(item, index)}
           keyExtractor={(item, index) => index.toString()}
         />
+
+        <View
+          style={{
+            height: 50,
+            marginBottom: 30,
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "row",
+          }}
+        >
+          <Text style={{ color: "#EC3D6C", fontSize: 16 }}>
+            Please Wait...we are processing !
+          </Text>
+        </View>
       </View>
     );
   }

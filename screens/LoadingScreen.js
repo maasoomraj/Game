@@ -47,9 +47,15 @@ export default class LoadingScreen extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#130B21",
+          paddingTop: StatusBar.currentHeight,
+        }}
+      >
         <View style={{ flex: 1 }}>
-          <MaterialIndicator color={"#2e424d"} />
+          <MaterialIndicator color={"#2e424d"} size={50} color={"#EC3D6C"} />
         </View>
       </View>
     );

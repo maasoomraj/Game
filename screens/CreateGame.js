@@ -100,38 +100,28 @@ export default class CreateGame extends Component {
   };
 
   roundDisplay = (item, index) => {
-    return this.state.numberOfRounds === item ? (
+    return (
       <TouchableOpacity
-        style={{
-          borderRadius: 10,
-          width: 70,
-          height: 50,
-          borderWidth: 0.5,
-          borderColor: "#000",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: 10,
-          backgroundColor: "#EBF1F5",
-        }}
+        style={[
+          {
+            borderRadius: 10,
+            width: 70,
+            height: 50,
+            borderWidth: 0.5,
+            borderColor: "#000",
+            justifyContent: "center",
+            alignItems: "center",
+            margin: 10,
+          },
+          this.state.numberOfRounds === item
+            ? { backgroundColor: "#B43480" }
+            : { backgroundColor: "#C27AC0" },
+        ]}
         onPress={() => this.setState({ numberOfRounds: item })}
       >
-        <Text>{item}</Text>
-      </TouchableOpacity>
-    ) : (
-      <TouchableOpacity
-        style={{
-          borderRadius: 10,
-          width: 70,
-          height: 50,
-          borderWidth: 0.5,
-          borderColor: "#000",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: 10,
-        }}
-        onPress={() => this.setState({ numberOfRounds: item })}
-      >
-        <Text>{item}</Text>
+        <Text style={{ color: "#000", fontSize: 14, fontWeight: "bold" }}>
+          {item}
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -141,7 +131,8 @@ export default class CreateGame extends Component {
       <View
         style={{
           flex: 1,
-          marginTop: StatusBar.currentHeight,
+          paddingTop: StatusBar.currentHeight,
+          backgroundColor: "#130B21",
         }}
       >
         <View
@@ -149,21 +140,28 @@ export default class CreateGame extends Component {
             margin: 20,
             justifyContent: "center",
             alignItems: "center",
-            height: 50,
-            borderBottomColor: "#000",
+            height: 140,
             borderBottomWidth: 0.5,
+            borderColor: "#EC3D6C",
           }}
         >
-          <Text style={{ fontSize: 24, fontWeight: "bold" }}>Create Game</Text>
+          <Text style={{ fontSize: 50, fontWeight: "bold", color: "#EC3D6C" }}>
+            Create Game
+          </Text>
         </View>
 
         <View
           style={{ justifyContent: "center", alignItems: "center", flex: 1 }}
         >
           <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 30,
+            }}
           >
-            <Text style={{ fontSize: 20, fontWeight: "normal" }}>
+            <Text style={{ fontSize: 20, fontWeight: "normal", color: "#eee" }}>
               Select number of rounds -{" "}
             </Text>
             <FlatList
@@ -188,7 +186,14 @@ export default class CreateGame extends Component {
               backgroundColor: "#F0B342",
             }}
           >
-            <Text style={{ fontWeight: "normal", color: "#000", fontSize: 20 }}>
+            <Text
+              style={{
+                fontWeight: "normal",
+                color: "#000",
+                fontSize: 20,
+                fontWeight: "bold",
+              }}
+            >
               Create Game
             </Text>
           </TouchableOpacity>
@@ -204,7 +209,9 @@ export default class CreateGame extends Component {
             flexDirection: "row",
           }}
         >
-          <Text>Already have a Game Code - </Text>
+          <Text style={{ color: "#EC3D6C", fontSize: 16 }}>
+            Already have a Game Code -{" "}
+          </Text>
           <TouchableOpacity
             onPress={() =>
               this.props.navigation.navigate("JoinGame", {
@@ -212,7 +219,11 @@ export default class CreateGame extends Component {
               })
             }
           >
-            <Text style={{ fontWeight: "bold" }}>Join Game</Text>
+            <Text
+              style={{ fontWeight: "bold", color: "#EC3D6C", fontSize: 16 }}
+            >
+              Join Game
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

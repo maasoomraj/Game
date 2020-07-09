@@ -104,6 +104,8 @@ export default class ChooseAnswer extends Component {
               borderColor: "#000",
               borderWidth: 0.4,
               minHeight: 50,
+              backgroundColor: "#C27AC0",
+              borderRadius: 30,
             }}
           >
             <View
@@ -113,7 +115,9 @@ export default class ChooseAnswer extends Component {
                 alignItems: "center",
               }}
             >
-              <Text>{item.answer}</Text>
+              <Text style={{ fontSize: 14, fontWeight: "bold" }}>
+                {item.answer}
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -163,37 +167,61 @@ export default class ChooseAnswer extends Component {
 
   render() {
     return this.state.picked ? (
-      <View style={{ marginTop: StatusBar.currentHeight, flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+          paddingTop: StatusBar.currentHeight,
+          backgroundColor: "#130B21",
+        }}
+      >
         <View
           style={{
             margin: 20,
             justifyContent: "center",
             alignItems: "center",
-            height: 100,
-            borderBottomColor: "#000",
+            minHeight: 100,
             borderBottomWidth: 0.5,
-            backgroundColor: "#A9DA88",
+            borderColor: "#EC3D6C",
           }}
         >
-          <Text style={{ fontSize: 22, fontWeight: "500", padding: 20 }}>
+          <Text
+            style={{
+              fontSize: 22,
+              fontWeight: "bold",
+              color: "#EC3D6C",
+              paddingHorizontal: 10,
+            }}
+          >
             Wait for other players to choose their answer
           </Text>
         </View>
       </View>
     ) : (
-      <View style={{ marginTop: StatusBar.currentHeight, flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+          paddingTop: StatusBar.currentHeight,
+          backgroundColor: "#130B21",
+        }}
+      >
         <View
           style={{
             margin: 20,
             justifyContent: "center",
             alignItems: "center",
-            height: 100,
-            borderBottomColor: "#000",
+            minHeight: 100,
             borderBottomWidth: 0.5,
-            backgroundColor: "#a9da88",
+            borderColor: "#EC3D6C",
           }}
         >
-          <Text style={{ fontSize: 22, fontWeight: "500", padding: 20 }}>
+          <Text
+            style={{
+              fontSize: 22,
+              fontWeight: "bold",
+              color: "#EC3D6C",
+              paddingHorizontal: 10,
+            }}
+          >
             Pick an answer -
           </Text>
         </View>

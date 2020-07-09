@@ -45,7 +45,7 @@ export default class LeaderBoard extends Component {
 
     setTimeout(() => {
       this.props.navigation.navigate("GameSelect");
-    }, 5000);
+    }, 10000);
   };
 
   changesMade = async () => {

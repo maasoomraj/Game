@@ -110,22 +110,25 @@ export default class AnswerState extends Component {
           borderColor: "#000",
           borderWidth: 0.4,
           height: 50,
-          backgroundColor: "#C6B7FA",
+          backgroundColor: "#C27AC0",
+          borderRadius: 30,
         }}
       >
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <Text>{item.name}</Text>
+        <View style={{ flex: 1, justifyContent: "center" }}>
+          <Text style={{ paddingLeft: 30, fontWeight: "bold", fontSize: 20 }}>
+            {item.name}
+          </Text>
         </View>
         <View
           style={{
-            width: 50,
+            width: 100,
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <Text style={{ fontSize: 18 }}>{item.answered ? "✓" : "⨯"}</Text>
+          <Text style={{ fontSize: 22, fontWeight: "bold" }}>
+            {item.answered ? "✓" : "⨯"}
+          </Text>
         </View>
       </View>
     );
@@ -133,7 +136,35 @@ export default class AnswerState extends Component {
 
   render() {
     return (
-      <View style={{ marginTop: StatusBar.currentHeight, flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+          paddingTop: StatusBar.currentHeight,
+          backgroundColor: "#130B21",
+        }}
+      >
+        <View
+          style={{
+            margin: 20,
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: 100,
+            borderBottomWidth: 0.5,
+            borderColor: "#EC3D6C",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 22,
+              fontWeight: "bold",
+              color: "#EC3D6C",
+              paddingHorizontal: 10,
+            }}
+          >
+            Waiting for others to write the answer
+          </Text>
+        </View>
+
         <FlatList
           data={this.state.players}
           renderItem={({ item }, index) => this.playerDisplay(item, index)}
