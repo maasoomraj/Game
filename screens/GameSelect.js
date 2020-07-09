@@ -1,11 +1,21 @@
 import React, { Component } from "react";
-import { View, Text, StatusBar, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StatusBar,
+  TouchableOpacity,
+  ScrollView,
+  ImageBackground,
+} from "react-native";
 
 import * as firebase from "firebase/app";
 require("firebase/auth");
 require("firebase/database");
 
 import { store } from "../helpers/redux-store";
+import { LinearGradient } from "expo-linear-gradient";
+
+import GradientClickable from "../helpers/components/GradientClickable";
 
 export default class MainScreen extends Component {
   constructor(props) {
@@ -35,7 +45,8 @@ export default class MainScreen extends Component {
       <View
         style={{
           flex: 1,
-          marginTop: StatusBar.currentHeight,
+          paddingTop: StatusBar.currentHeight,
+          backgroundColor: "#130B21",
         }}
       >
         <View
@@ -43,82 +54,100 @@ export default class MainScreen extends Component {
             margin: 20,
             justifyContent: "center",
             alignItems: "center",
-            height: 50,
-            borderBottomColor: "#000",
-            borderBottomWidth: 0.5,
+            height: 140,
           }}
         >
-          <Text style={{ fontSize: 24, fontWeight: "bold" }}>Game</Text>
+          <Text style={{ fontSize: 50, fontWeight: "bold", color: "#EC3D6C" }}>
+            Game
+          </Text>
           <Text
-            style={{ fontSize: 14, fontWeight: "500", fontStyle: "italic" }}
+            style={{
+              fontSize: 20,
+              fontWeight: "500",
+              fontStyle: "italic",
+              color: "#eee",
+            }}
           >
-            {this.state.user.name}
+            Hello {this.state.user.name}
           </Text>
         </View>
 
-        <View
-          style={{ justifyContent: "center", alignItems: "center", flex: 1 }}
-        >
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate("JoinGame", {
-                user: this.state.user,
-              })
-            }
-            style={{
-              borderRadius: 13,
-              width: 170,
-              height: 50,
-              justifyContent: "center",
-              alignItems: "center",
-              marginBottom: 20,
-              borderColor: "#000",
-              borderWidth: 0.2,
-            }}
-          >
-            <Text style={{ fontWeight: "normal", color: "#000", fontSize: 20 }}>
-              Join Game
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate("CreateGame", {
-                user: this.state.user,
-              })
-            }
-            style={{
-              borderRadius: 13,
-              width: 170,
-              height: 50,
-              justifyContent: "center",
-              alignItems: "center",
-              marginBottom: 20,
-              borderColor: "#000",
-              borderWidth: 0.2,
-            }}
-          >
-            <Text style={{ fontWeight: "normal", color: "#000", fontSize: 20 }}>
-              Create Game
-            </Text>
-          </TouchableOpacity>
+        <ScrollView style={{ flex: 1 }}>
+          {/* CREATE GAME */}
+          <GradientClickable
+            props={this.props}
+            nav={"CreateGame"}
+            colors={["#0E1111", "#222A2A", "#343637", "#394249", "#3F484A"]}
+            headerText={"Edit Details"}
+            subText={"Change your username or password"}
+          />
 
-          <TouchableOpacity
-            onPress={this.logout}
+          {/* CREATE GAME */}
+          <GradientClickable
+            props={this.props}
+            nav={"CreateGame"}
+            // colors={["#EB8139", "#EFAB40", "#F6DE66"]}
+            colors={["#7E1A20", "#7E1A20", "#9F2325", "#B5292A", "#C52E2B"]}
+            headerText={"Create Game"}
+            subText={"Create new game and share your code"}
+          />
+
+          {/* JOIN GAME */}
+          <GradientClickable
+            props={this.props}
+            nav={"JoinGame"}
+            // colors={["#D6322D", "#E9716C", "#EA9197"]}
+            // colors={["#21153A", "#231539"]}
+            colors={["#04062D", "#040D47", "#081869", "#0B2591", "#0D38A4"]}
+            headerText={"Join Game"}
+            subText={"Join to play with your friends"}
+          />
+
+          {/* Developer Info */}
+          <GradientClickable
+            props={this.props}
+            nav={"JoinGame"}
+            colors={["#051D3C", "#241D3C", "#431D3C", "#631D3C", "#811E3C"]}
+            headerText={"Developer Info"}
+            subText={"App Developer details"}
+          />
+
+          {/* LOGOUT */}
+          <LinearGradient
+            // colors={["#4A9629", "#65B657", "#A8D983"]}
+            colors={["#101032", "#154254", "#276463", "#388474", "#52A584"]}
+            // colors={colors}
             style={{
               borderRadius: 13,
-              width: 170,
-              height: 50,
-              justifyContent: "center",
-              alignItems: "center",
+              height: 100,
+              marginVertical: 5,
               borderColor: "#000",
-              borderWidth: 0.2,
+              borderWidth: 0.8,
+              marginHorizontal: 5,
             }}
           >
-            <Text style={{ fontWeight: "normal", color: "#000", fontSize: 20 }}>
-              Logout
-            </Text>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              onPress={this.logout}
+              // style={{
+              //   justifyContent: "center",
+              //   alignItems: "center",
+              // }}
+            >
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  color: "#fff",
+                  fontSize: 24,
+                  paddingTop: 10,
+                  paddingBottom: 5,
+                  paddingHorizontal: 15,
+                }}
+              >
+                Logout
+              </Text>
+            </TouchableOpacity>
+          </LinearGradient>
+        </ScrollView>
         {/* <Text style={{ color: "#000" }}>{this.state.user.name}</Text> */}
       </View>
     );

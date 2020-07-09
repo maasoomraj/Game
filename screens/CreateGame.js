@@ -11,6 +11,7 @@ import {
 
 import { snapshotToArray } from "../helpers/snapshot";
 import { codeGenerator } from "../helpers/CodeGenerator";
+import { store } from "../helpers/redux-store";
 
 import * as firebase from "firebase/app";
 import("firebase/auth");
@@ -26,14 +27,14 @@ export default class CreateGame extends Component {
   }
 
   componentDidMount = () => {
-    const { navigation } = this.props;
-    const user = navigation.getParam("user");
+    // const { navigation } = this.props;
+    // const user = navigation.getParam("user");
     const rounds = [5, 10, 15, 20];
-    this.setState({ user, rounds });
+    this.setState({ user: store.getState().user, rounds });
 
     BackHandler.addEventListener("hardwareBackPress", () =>
       this.props.navigation.navigate("GameSelect", {
-        user: user,
+        user: store.getState().user,
       })
     );
   };
