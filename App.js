@@ -5,7 +5,6 @@ import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import * as firebase from "firebase/app";
 import { firebaseConfig } from "./config/config";
 
-import WelcomeScreen from "./screens/WelcomeScreen";
 import StartGame from "./screens/StartGame";
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
@@ -14,6 +13,10 @@ import GameSelect from "./screens/GameSelect";
 import JoinGame from "./screens/JoinGame";
 import CreateGame from "./screens/CreateGame";
 import GameScreen from "./screens/GameScreen";
+import AnswerState from "./screens/AnswerState";
+import ChooseAnswer from "./screens/ChooseAnswer";
+import LeaderBoard from "./screens/LeaderBoard";
+import FinalLeaderBoard from "./screens/FinalLeaderBoard";
 
 class App extends React.Component {
   constructor() {
@@ -35,12 +38,15 @@ const AppSwitchNavigator = createSwitchNavigator({
   LoadingScreen,
   LoginScreen,
   SignUpScreen,
-  WelcomeScreen,
   StartGame,
   GameSelect,
   JoinGame,
   CreateGame,
   GameScreen,
+  AnswerState,
+  ChooseAnswer,
+  LeaderBoard,
+  FinalLeaderBoard,
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);

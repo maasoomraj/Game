@@ -5,6 +5,8 @@ import * as firebase from "firebase/app";
 require("firebase/auth");
 require("firebase/database");
 
+import { store } from "../helpers/redux-store";
+
 export default class MainScreen extends Component {
   constructor(props) {
     super(props);
@@ -14,10 +16,9 @@ export default class MainScreen extends Component {
   }
 
   componentDidMount = () => {
-    const { navigation } = this.props;
-    const user = navigation.getParam("user");
-    console.log(user);
-    this.setState({ user });
+    // const { navigation } = this.props;
+    // const user = navigation.getParam("user");
+    this.setState({ user: store.getState().user });
   };
 
   logout = async () => {
@@ -48,6 +49,11 @@ export default class MainScreen extends Component {
           }}
         >
           <Text style={{ fontSize: 24, fontWeight: "bold" }}>Game</Text>
+          <Text
+            style={{ fontSize: 14, fontWeight: "500", fontStyle: "italic" }}
+          >
+            {this.state.user.name}
+          </Text>
         </View>
 
         <View

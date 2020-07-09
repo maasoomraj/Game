@@ -6,28 +6,30 @@ import {
   StatusBar,
   BackHandler,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
 
 import { snapshotToArray } from "../helpers/snapshot";
+import { codeGenerator } from "../helpers/CodeGenerator";
 
 import * as firebase from "firebase/app";
 import("firebase/auth");
 import("firebase/database");
-
-let code = "game";
 
 export default class CreateGame extends Component {
   constructor(props) {
     super(props);
     this.state = {
       user: {},
+      numberOfRounds: "",
     };
   }
 
   componentDidMount = () => {
     const { navigation } = this.props;
     const user = navigation.getParam("user");
-    this.setState({ user });
+    const rounds = [5, 10, 15, 20];
+    this.setState({ user, rounds });
 
     BackHandler.addEventListener("hardwareBackPress", () =>
       this.props.navigation.navigate("GameSelect", {
@@ -37,13 +39,13 @@ export default class CreateGame extends Component {
   };
 
   create = async () => {
+    if (!this.state.numberOfRounds) {
+      alert("Select number of rounds");
+      return;
+    }
+
     try {
-      //   const key = await firebase.database().ref("users").push().key;
-      //   await firebase
-      //     .database()
-      //     .ref("users")
-      //     .child(key)
-      //     .set({ name: this.state.user.name });
+      let code = codeGenerator();
 
       const key = this.state.user.key;
 
@@ -60,14 +62,22 @@ export default class CreateGame extends Component {
         .child(gameID)
         .child("players")
         .child(playerID)
-        .set({ name: this.state.user.name, userKey: key, ready: true });
+        .set({
+          name: this.state.user.name,
+          userKey: key,
+          ready: true,
+          answer: "",
+          answered: false,
+          point: 0,
+          picked: false,
+        });
 
       await firebase
         .database()
         .ref("game")
         .child(gameID)
         .child("gameStatus")
-        .set({ start: false });
+        .set({ start: false, counter: 0, rounds: this.state.numberOfRounds });
 
       await firebase
         .database()
@@ -80,11 +90,49 @@ export default class CreateGame extends Component {
             admin: key,
             gameID: gameID,
             playerID,
+            gameCode: code,
           })
         );
     } catch (error) {
       alert(error);
     }
+  };
+
+  roundDisplay = (item, index) => {
+    return this.state.numberOfRounds === item ? (
+      <TouchableOpacity
+        style={{
+          borderRadius: 10,
+          width: 70,
+          height: 50,
+          borderWidth: 0.5,
+          borderColor: "#000",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: 10,
+          backgroundColor: "#EBF1F5",
+        }}
+        onPress={() => this.setState({ numberOfRounds: item })}
+      >
+        <Text>{item}</Text>
+      </TouchableOpacity>
+    ) : (
+      <TouchableOpacity
+        style={{
+          borderRadius: 10,
+          width: 70,
+          height: 50,
+          borderWidth: 0.5,
+          borderColor: "#000",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: 10,
+        }}
+        onPress={() => this.setState({ numberOfRounds: item })}
+      >
+        <Text>{item}</Text>
+      </TouchableOpacity>
+    );
   };
 
   render() {
@@ -111,6 +159,20 @@ export default class CreateGame extends Component {
         <View
           style={{ justifyContent: "center", alignItems: "center", flex: 1 }}
         >
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <Text style={{ fontSize: 20, fontWeight: "normal" }}>
+              Select number of rounds -{" "}
+            </Text>
+            <FlatList
+              data={this.state.rounds}
+              renderItem={({ item }, index) => this.roundDisplay(item, index)}
+              keyExtractor={(item, index) => index.toString()}
+              numColumns={4}
+              contentContainerStyle={{ alignItems: "center" }}
+            />
+          </View>
           <TouchableOpacity
             onPress={this.create}
             style={{
@@ -122,6 +184,7 @@ export default class CreateGame extends Component {
               marginBottom: 20,
               borderColor: "#000",
               borderWidth: 0.2,
+              backgroundColor: "#F0B342",
             }}
           >
             <Text style={{ fontWeight: "normal", color: "#000", fontSize: 20 }}>

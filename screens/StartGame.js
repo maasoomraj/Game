@@ -12,6 +12,7 @@ import {
 } from "react-native";
 
 import { snapshotToArray } from "../helpers/snapshot";
+import { store } from "../helpers/redux-store";
 
 import * as firebase from "firebase/app";
 import("firebase/auth");
@@ -40,6 +41,14 @@ export default class StartGame extends Component {
     const gameID = navigation.getParam("gameID");
     const playerID = navigation.getParam("playerID");
     const players = navigation.getParam("players") || [];
+    const gameCode = navigation.getParam("gameCode");
+    let playersMap = new Map();
+    for (let i in players) {
+      playersMap.set(players[i].userKey, players[i]);
+    }
+
+    console.log(admin);
+    console.log(userKey);
 
     this.setState(
       {
@@ -49,11 +58,14 @@ export default class StartGame extends Component {
         gameID,
         players,
         playerID,
+        playersMap,
+        playersLoaded: true,
+        gameCode,
+        user: store.getState().user,
       },
       () => {
         this.receive();
         this.update();
-        this.orderPlayers();
         this.startGame();
       }
     );
@@ -84,22 +96,6 @@ export default class StartGame extends Component {
   //   }
   // }
 
-  orderPlayers = () => {
-    let array = [];
-    let playersMap = new Map();
-    for (let i in this.state.players) {
-      if (!playersMap.has(this.state.players[i].userKey)) {
-        array.push(this.state.players[i]);
-        playersMap.set(this.state.players[i].userKey, 1);
-      }
-    }
-
-    // console.log("players ");
-    // console.log(playersMap);
-    // console.log(array);
-    this.setState({ players: array, playersLoaded: true });
-  };
-
   receive = async () => {
     try {
       await firebase
@@ -108,7 +104,14 @@ export default class StartGame extends Component {
         .child(this.state.gameID)
         .child("players")
         .on("child_added", (snapshot) => {
-          this.setState({ players: [...this.state.players, snapshot.val()] });
+          if (!this.state.playersMap.has(snapshot.val().userKey)) {
+            let newPlayersMap = this.state.playersMap;
+            newPlayersMap.set(snapshot.val().userKey, snapshot.val());
+            this.setState({
+              players: [...this.state.players, snapshot.val()],
+              playersMap: newPlayersMap,
+            });
+          }
         });
     } catch (error) {
       alert("ERROR 1 " + error);
@@ -175,6 +178,18 @@ export default class StartGame extends Component {
   };
 
   start = async () => {
+    let status = true;
+    for (let i in this.state.players) {
+      if (this.state.players[i].ready === false) {
+        status = false;
+        break;
+      }
+    }
+
+    if (!status) {
+      alert("All Players are not ready.");
+      return;
+    }
     try {
       await firebase
         .database()
@@ -247,8 +262,12 @@ export default class StartGame extends Component {
             }}
           >
             <Text style={{ fontSize: 24, fontWeight: "bold" }}>
-              {" "}
-              Let's Chat !
+              Game Code - "{this.state.gameCode}"
+            </Text>
+            <Text
+              style={{ fontSize: 14, fontWeight: "500", fontStyle: "italic" }}
+            >
+              Share with your friends.
             </Text>
           </View>
 
@@ -290,7 +309,12 @@ export default class StartGame extends Component {
             </View>
             {/* // */}
             {this.state.start
-              ? this.props.navigation.navigate("GameScreen")
+              ? this.props.navigation.navigate("GameScreen", {
+                  admin: this.state.admin,
+                  gameID: this.state.gameID,
+                  players: this.state.players,
+                  playerID: this.state.playerID,
+                })
               : null}
           </View>
         </View>

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 
 import { snapshotToArray } from "../helpers/snapshot";
+import { store } from "../helpers/redux-store";
 
 import * as firebase from "firebase/app";
 import("firebase/auth");
@@ -24,13 +25,13 @@ export default class JoinGame extends Component {
   }
 
   componentDidMount = () => {
-    const { navigation } = this.props;
-    const user = navigation.getParam("user");
-    this.setState({ user });
+    // const { navigation } = this.props;
+    // const user = navigation.getParam("user");
+    this.setState({ user: store.getState().user });
 
     BackHandler.addEventListener("hardwareBackPress", () =>
       this.props.navigation.navigate("GameSelect", {
-        user: user,
+        user: store.getState().user,
       })
     );
   };
@@ -53,13 +54,6 @@ export default class JoinGame extends Component {
         return;
       }
 
-      //   const key = await firebase.database().ref("users").push().key;
-      //   await firebase
-      //     .database()
-      //     .ref("users")
-      //     .child(key)
-      //     .set({ name: this.state.user.name });
-
       const key = this.state.user.key;
 
       const gameID = gameDetails.val().gameID;
@@ -73,31 +67,62 @@ export default class JoinGame extends Component {
         .once("value");
 
       const players = snapshotToArray(playersSnap);
-      players.push({ name: this.state.user.name, userKey: key, ready: false });
-      console.log(players);
+      let playersMap = new Map();
+      for (let i in players) {
+        playersMap.set(players[i].userKey, players[i]);
+      }
 
-      const playerID = await firebase
-        .database()
-        .ref("game")
-        .child(gameID)
-        .child("players")
-        .push().key;
-      await firebase
-        .database()
-        .ref("game")
-        .child(gameID)
-        .child("players")
-        .child(playerID)
-        .set({ name: this.state.user.name, userKey: key, ready: false }, () =>
-          this.props.navigation.navigate("StartGame", {
+      console.log(players);
+      console.log("MAP");
+      console.log(playersMap);
+      console.log(this.state.user.key);
+
+      let playerID;
+      if (!playersMap.has(key)) {
+        players.push({
+          name: this.state.user.name,
+          userKey: key,
+          ready: false,
+          answer: "",
+          answered: false,
+          point: 0,
+          picked: false,
+        });
+        playerID = await firebase
+          .database()
+          .ref("game")
+          .child(gameID)
+          .child("players")
+          .push().key;
+
+        await firebase
+          .database()
+          .ref("game")
+          .child(gameID)
+          .child("players")
+          .child(playerID)
+          .set({
             name: this.state.user.name,
             userKey: key,
-            admin: admin,
-            gameID: gameID,
-            players: players,
-            playerID,
-          })
-        );
+            ready: false,
+            answer: "",
+            answered: false,
+            point: 0,
+            picked: false,
+          });
+      } else {
+        playerID = playersMap.get(this.state.user.key).key;
+      }
+
+      this.props.navigation.navigate("StartGame", {
+        name: this.state.user.name,
+        userKey: key,
+        admin: admin,
+        gameID: gameID,
+        players: players,
+        playerID,
+        gameCode: this.state.gameCode,
+      });
     } catch (error) {
       alert(error);
     }
