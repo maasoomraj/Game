@@ -124,7 +124,7 @@ export default class LoginScreen extends Component {
             keyboardType="email-address"
             onChangeText={(text) => this.setState({ email: text })}
             placeholder="Enter email address"
-            placeholderTextColor="#EC3D6C"
+            placeholderTextColor="#eee"
             style={{
               color: "#000",
               fontSize: 18,
@@ -143,7 +143,7 @@ export default class LoginScreen extends Component {
             value={this.state.password}
             onChangeText={(text) => this.setState({ password: text })}
             placeholder="Enter your password"
-            placeholderTextColor="#EC3D6C"
+            placeholderTextColor="#eee"
             style={{
               color: "#000",
               fontSize: 18,

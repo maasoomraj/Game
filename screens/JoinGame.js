@@ -47,7 +47,7 @@ export default class JoinGame extends Component {
     }
 
     this.setState({
-      connectionStatus: "We are checking the game code",
+      connectionStatus: "We are checking the game code...",
       isLoading: true,
     });
 
@@ -64,7 +64,24 @@ export default class JoinGame extends Component {
         return;
       }
 
-      this.setState({ connectionStatus: "We are connecting you to the game" });
+      this.setState({ connectionStatus: "Checking the game status..." });
+
+      const status = await firebase
+        .database()
+        .ref("game")
+        .child(gameDetails.val().gameID)
+        .child("gameStatus")
+        .once("value");
+
+      if (status.val().start) {
+        this.setState({ isLoading: false });
+        alert("Game has already started.\nCannot enter between ongoing game");
+        return;
+      }
+
+      this.setState({
+        connectionStatus: "We are connecting you to the game...",
+      });
 
       const key = this.state.user.key;
 

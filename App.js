@@ -19,6 +19,7 @@ import LeaderBoard from "./screens/LeaderBoard";
 import FinalLeaderBoard from "./screens/FinalLeaderBoard";
 import DeveloperInfo from "./screens/DeveloperInfo";
 import EditDetails from "./screens/EditDetails";
+import ChangePassword from "./screens/ChangePassword";
 
 class App extends React.Component {
   constructor() {
@@ -51,6 +52,7 @@ const AppSwitchNavigator = createSwitchNavigator({
   FinalLeaderBoard,
   DeveloperInfo,
   EditDetails,
+  ChangePassword,
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);

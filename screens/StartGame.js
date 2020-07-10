@@ -210,6 +210,12 @@ export default class StartGame extends Component {
       alert("All Players are not ready.");
       return;
     }
+
+    if (this.state.players.length < 3) {
+      this.setState({ isLoading: false });
+      alert("You can start the game with minimum 3 players");
+      return;
+    }
     try {
       await firebase
         .database()

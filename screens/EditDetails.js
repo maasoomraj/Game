@@ -189,7 +189,7 @@ export default class EditDetails extends Component {
           }}
         >
           <Text style={{ color: "#EC3D6C", fontSize: 16, fontWeight: "bold" }}>
-            Saving your changes
+            Saving your changes...
           </Text>
         </View>
       </View>
@@ -264,21 +264,10 @@ export default class EditDetails extends Component {
             </View>
           </View>
 
-          <View style={{ height: 30, marginTop: 20 }}>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "400",
-                letterSpacing: 0.2,
-                color: "#84B168",
-                paddingHorizontal: 30,
-              }}
-            >
-              Username :
-            </Text>
-          </View>
           {this.state.changeUsername ? (
-            <View style={{ minHeight: 30, flexDirection: "row" }}>
+            <View
+              style={{ minHeight: 30, flexDirection: "row", marginTop: 50 }}
+            >
               {/* TextInput */}
               <View
                 style={{
@@ -339,7 +328,9 @@ export default class EditDetails extends Component {
               </View>
             </View>
           ) : (
-            <View style={{ minHeight: 30, flexDirection: "row" }}>
+            <View
+              style={{ minHeight: 30, flexDirection: "row", marginTop: 50 }}
+            >
               {/* Display Name */}
               <View
                 style={{
@@ -381,6 +372,49 @@ export default class EditDetails extends Component {
               </View>
             </View>
           )}
+
+          {/* Password */}
+          <View style={{ minHeight: 30, flexDirection: "row", marginTop: 40 }}>
+            {/* Display Name */}
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                paddingHorizontal: 20,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: "700",
+                  letterSpacing: 0.2,
+                  color: "#F0B342",
+                }}
+              >
+                Change Password
+              </Text>
+            </View>
+
+            {/* Change Username Button */}
+            <View
+              style={{
+                width: 80,
+                justifyContent: "center",
+                alignItems: "center",
+                paddingHorizontal: 20,
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate("ChangePassword")}
+              >
+                <Image
+                  source={require("../assets/edit.png")}
+                  style={{ width: 30, height: 30 }}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </View>
     );

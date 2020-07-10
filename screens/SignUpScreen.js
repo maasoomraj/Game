@@ -23,6 +23,7 @@ export default class LoginScreen extends Component {
       name: "",
       email: "",
       password: "",
+      confirmPassword: "",
       isLoading: false,
     };
   }
@@ -50,8 +51,19 @@ export default class LoginScreen extends Component {
 
   signUp = async () => {
     let name = this.state.name;
-    if (this.state.email && this.state.password && this.state.name) {
+    if (
+      this.state.email &&
+      this.state.password &&
+      this.state.name &&
+      this.state.confirmPassword
+    ) {
+      if (!(this.state.password === this.state.confirmPassword)) {
+        alert("Password doesnot matches.");
+        return;
+      }
+
       this.setState({ isLoading: true });
+
       try {
         let response = await firebase
           .auth()
@@ -131,7 +143,7 @@ export default class LoginScreen extends Component {
             value={this.state.name}
             onChangeText={(text) => this.setState({ name: text })}
             placeholder="Enter Name"
-            placeholderTextColor="#EC3D6C"
+            placeholderTextColor="#eee"
             style={{
               color: "#000",
               fontSize: 18,
@@ -150,7 +162,7 @@ export default class LoginScreen extends Component {
             keyboardType="email-address"
             onChangeText={(text) => this.setState({ email: text })}
             placeholder="Enter email address"
-            placeholderTextColor="#EC3D6C"
+            placeholderTextColor="#eee"
             style={{
               color: "#000",
               fontSize: 18,
@@ -169,7 +181,26 @@ export default class LoginScreen extends Component {
             value={this.state.password}
             onChangeText={(text) => this.setState({ password: text })}
             placeholder="Enter your password"
-            placeholderTextColor="#EC3D6C"
+            placeholderTextColor="#eee"
+            style={{
+              color: "#000",
+              fontSize: 18,
+              height: 50,
+              borderRadius: 10,
+              marginHorizontal: 20,
+              paddingHorizontal: 15,
+              marginBottom: 20,
+              borderBottomWidth: 0.5,
+              borderColor: "#EC3D6C",
+              color: "#EC3D6C",
+            }}
+          />
+          <TextInput
+            secureTextEntry
+            value={this.state.confirmPassword}
+            onChangeText={(text) => this.setState({ confirmPassword: text })}
+            placeholder="Confrim your password"
+            placeholderTextColor="#eee"
             style={{
               color: "#000",
               fontSize: 18,
