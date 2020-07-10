@@ -6,6 +6,7 @@ import {
   TextInput,
   StatusBar,
   TouchableOpacity,
+  ToastAndroid,
   FlatList,
 } from "react-native";
 
@@ -14,6 +15,8 @@ import { store } from "../helpers/redux-store";
 import * as firebase from "firebase/app";
 import("firebase/auth");
 import("firebase/database");
+
+let backPressed = 0;
 
 export default class LeaderBoard extends Component {
   constructor(props) {
@@ -46,7 +49,26 @@ export default class LeaderBoard extends Component {
     setTimeout(() => {
       this.props.navigation.navigate("GameSelect");
     }, 10000);
+
+    BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackButton.bind(this)
+    );
   };
+
+  handleBackButton() {
+    if (backPressed > 0) {
+      this.props.navigation.navigate("GameSelect");
+      backPressed = 0;
+    } else {
+      backPressed++;
+      ToastAndroid.show("Press Again To Exit the Game", ToastAndroid.SHORT);
+      setTimeout(() => {
+        backPressed = 0;
+      }, 2000);
+      return true;
+    }
+  }
 
   changesMade = async () => {
     try {

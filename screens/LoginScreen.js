@@ -5,11 +5,16 @@ import {
   TextInput,
   StatusBar,
   TouchableOpacity,
+  ToastAndroid,
+  BackHandler,
 } from "react-native";
+import { MaterialIndicator } from "react-native-indicators";
 
 import * as firebase from "firebase/app";
 require("firebase/auth");
 require("firebase/database");
+
+let backPressed = 0;
 
 export default class LoginScreen extends Component {
   constructor(props) {
@@ -19,6 +24,27 @@ export default class LoginScreen extends Component {
       password: "",
       isLoading: false,
     };
+  }
+
+  componentDidMount = () => {
+    BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackButton.bind(this)
+    );
+  };
+
+  handleBackButton() {
+    if (backPressed > 0) {
+      BackHandler.exitApp();
+      backPressed = 0;
+    } else {
+      backPressed++;
+      ToastAndroid.show("Press Again To Exit", ToastAndroid.SHORT);
+      setTimeout(() => {
+        backPressed = 0;
+      }, 2000);
+      return true;
+    }
   }
 
   login = async () => {
@@ -57,14 +83,48 @@ export default class LoginScreen extends Component {
   };
 
   render() {
-    return (
-      <View style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
+    return this.state.isLoading ? (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#130B21",
+          paddingTop: StatusBar.currentHeight,
+        }}
+      >
+        <View
+          style={{ flex: 3, alignItems: "center", justifyContent: "center" }}
+        >
+          <MaterialIndicator color={"#2e424d"} size={50} color={"#EC3D6C"} />
+        </View>
+        <View
+          style={{
+            flex: 1,
+            marginTop: 40,
+            marginHorizontal: 20,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: "#EC3D6C", fontSize: 16, fontWeight: "bold" }}>
+            Please wait..we are logging you in...
+          </Text>
+        </View>
+      </View>
+    ) : (
+      <View
+        style={{
+          flex: 1,
+          paddingTop: StatusBar.currentHeight,
+          backgroundColor: "#130B21",
+        }}
+      >
         <View style={{ flex: 1, marginVertical: 40 }}>
           <TextInput
             value={this.state.email}
             keyboardType="email-address"
             onChangeText={(text) => this.setState({ email: text })}
             placeholder="Enter email address"
+            placeholderTextColor="#EC3D6C"
             style={{
               color: "#000",
               fontSize: 18,
@@ -73,8 +133,9 @@ export default class LoginScreen extends Component {
               marginHorizontal: 20,
               paddingHorizontal: 15,
               marginBottom: 20,
-              borderWidth: 0.2,
-              borderColor: "#c4c4c4",
+              borderBottomWidth: 0.5,
+              borderColor: "#EC3D6C",
+              color: "#EC3D6C",
             }}
           />
           <TextInput
@@ -82,6 +143,7 @@ export default class LoginScreen extends Component {
             value={this.state.password}
             onChangeText={(text) => this.setState({ password: text })}
             placeholder="Enter your password"
+            placeholderTextColor="#EC3D6C"
             style={{
               color: "#000",
               fontSize: 18,
@@ -90,8 +152,9 @@ export default class LoginScreen extends Component {
               marginHorizontal: 20,
               paddingHorizontal: 15,
               marginBottom: 20,
-              borderWidth: 0.2,
-              borderColor: "#c4c4c4",
+              borderBottomWidth: 0.5,
+              borderColor: "#EC3D6C",
+              color: "#EC3D6C",
             }}
           />
           <View
@@ -110,10 +173,11 @@ export default class LoginScreen extends Component {
                 alignItems: "center",
                 borderWidth: 0.3,
                 borderColor: "#000",
+                backgroundColor: "#F0B342",
               }}
               onPress={this.login}
             >
-              <Text>Login</Text>
+              <Text style={{ fontWeight: "bold" }}>Login</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -126,11 +190,15 @@ export default class LoginScreen extends Component {
             flexDirection: "row",
           }}
         >
-          <Text>Create an account - </Text>
+          <Text style={{ color: "#eee", fontSize: 16 }}>
+            Create an account -{" "}
+          </Text>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("SignUpScreen")}
           >
-            <Text style={{ fontWeight: "bold" }}>Sign Up</Text>
+            <Text style={{ fontWeight: "bold", color: "#eee", fontSize: 16 }}>
+              Sign Up
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

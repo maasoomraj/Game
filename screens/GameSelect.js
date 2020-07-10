@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   ScrollView,
   ImageBackground,
+  BackHandler,
+  ToastAndroid,
 } from "react-native";
 
 import * as firebase from "firebase/app";
@@ -16,6 +18,7 @@ import { store } from "../helpers/redux-store";
 import { LinearGradient } from "expo-linear-gradient";
 
 import GradientClickable from "../helpers/components/GradientClickable";
+let backPressed = 0;
 
 export default class MainScreen extends Component {
   constructor(props) {
@@ -29,7 +32,26 @@ export default class MainScreen extends Component {
     // const { navigation } = this.props;
     // const user = navigation.getParam("user");
     this.setState({ user: store.getState().user });
+
+    BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackButton.bind(this)
+    );
   };
+
+  handleBackButton() {
+    if (backPressed > 0) {
+      BackHandler.exitApp();
+      backPressed = 0;
+    } else {
+      backPressed++;
+      ToastAndroid.show("Press Again To Exit", ToastAndroid.SHORT);
+      setTimeout(() => {
+        backPressed = 0;
+      }, 2000);
+      return true;
+    }
+  }
 
   logout = async () => {
     try {
@@ -73,7 +95,7 @@ export default class MainScreen extends Component {
         </View>
 
         <ScrollView style={{ flex: 1 }}>
-          {/* CREATE GAME */}
+          {/* Edit Details */}
           <GradientClickable
             props={this.props}
             nav={"CreateGame"}
@@ -106,7 +128,7 @@ export default class MainScreen extends Component {
           {/* Developer Info */}
           <GradientClickable
             props={this.props}
-            nav={"JoinGame"}
+            nav={"DeveloperInfo"}
             colors={["#051D3C", "#241D3C", "#431D3C", "#631D3C", "#811E3C"]}
             headerText={"Developer Info"}
             subText={"App Developer details"}

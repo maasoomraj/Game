@@ -17,6 +17,7 @@ import AnswerState from "./screens/AnswerState";
 import ChooseAnswer from "./screens/ChooseAnswer";
 import LeaderBoard from "./screens/LeaderBoard";
 import FinalLeaderBoard from "./screens/FinalLeaderBoard";
+import DeveloperInfo from "./screens/DeveloperInfo";
 
 class App extends React.Component {
   constructor() {
@@ -47,6 +48,7 @@ const AppSwitchNavigator = createSwitchNavigator({
   ChooseAnswer,
   LeaderBoard,
   FinalLeaderBoard,
+  DeveloperInfo,
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);

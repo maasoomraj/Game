@@ -6,11 +6,13 @@ import {
   TouchableOpacity,
   StatusBar,
   BackHandler,
+  Dimensions,
 } from "react-native";
 
 import { snapshotToArray } from "../helpers/snapshot";
 import { store } from "../helpers/redux-store";
 import { LinearGradient } from "expo-linear-gradient";
+import { MaterialIndicator } from "react-native-indicators";
 
 import * as firebase from "firebase/app";
 import("firebase/auth");
@@ -22,6 +24,9 @@ export default class JoinGame extends Component {
     this.state = {
       user: "",
       gameCode: "",
+      backPress: false,
+      isLoading: false,
+      connectionStatus: "",
     };
   }
 
@@ -31,9 +36,7 @@ export default class JoinGame extends Component {
     this.setState({ user: store.getState().user });
 
     BackHandler.addEventListener("hardwareBackPress", () =>
-      this.props.navigation.navigate("GameSelect", {
-        user: store.getState().user,
-      })
+      this.props.navigation.navigate("GameSelect")
     );
   };
 
@@ -43,6 +46,11 @@ export default class JoinGame extends Component {
       return;
     }
 
+    this.setState({
+      connectionStatus: "We are checking the game code",
+      isLoading: true,
+    });
+
     try {
       const gameDetails = await firebase
         .database()
@@ -51,9 +59,12 @@ export default class JoinGame extends Component {
         .once("value");
 
       if (gameDetails.val() === null) {
+        this.setState({ isLoading: false });
         alert("Game Code is wrong.");
         return;
       }
+
+      this.setState({ connectionStatus: "We are connecting you to the game" });
 
       const key = this.state.user.key;
 
@@ -125,12 +136,40 @@ export default class JoinGame extends Component {
         gameCode: this.state.gameCode,
       });
     } catch (error) {
+      this.setState({ isLoading: false });
       alert(error);
     }
   };
 
   render() {
-    return (
+    return this.state.isLoading ? (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#130B21",
+          paddingTop: StatusBar.currentHeight,
+        }}
+      >
+        <View
+          style={{ flex: 3, alignItems: "center", justifyContent: "center" }}
+        >
+          <MaterialIndicator color={"#2e424d"} size={50} color={"#EC3D6C"} />
+        </View>
+        <View
+          style={{
+            flex: 1,
+            marginTop: 40,
+            marginHorizontal: 20,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: "#EC3D6C", fontSize: 16, fontWeight: "bold" }}>
+            {this.state.connectionStatus}
+          </Text>
+        </View>
+      </View>
+    ) : (
       <View
         style={{
           flex: 1,

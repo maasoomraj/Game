@@ -8,15 +8,19 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
+  ToastAndroid,
   FlatList,
 } from "react-native";
 
 import { snapshotToArray } from "../helpers/snapshot";
 import { store } from "../helpers/redux-store";
+import { MaterialIndicator } from "react-native-indicators";
 
 import * as firebase from "firebase/app";
 import("firebase/auth");
 import("firebase/database");
+
+let backPressed = 0;
 
 export default class StartGame extends Component {
   constructor(props) {
@@ -28,8 +32,8 @@ export default class StartGame extends Component {
       gameID: "",
       players: [],
       ready: false,
-      playersLoaded: false,
       start: false,
+      isLoading: false,
     };
   }
 
@@ -59,7 +63,6 @@ export default class StartGame extends Component {
         players,
         playerID,
         playersMap,
-        playersLoaded: true,
         gameCode,
         user: store.getState().user,
       },
@@ -70,9 +73,24 @@ export default class StartGame extends Component {
       }
     );
 
-    BackHandler.addEventListener("hardwareBackPress", () =>
-      this.props.navigation.navigate("GameSelect")
+    BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackButton.bind(this)
     );
+  }
+
+  handleBackButton() {
+    if (backPressed > 0) {
+      this.props.navigation.navigate("GameSelect");
+      backPressed = 0;
+    } else {
+      backPressed++;
+      ToastAndroid.show("Press Again To Exit the Game", ToastAndroid.SHORT);
+      setTimeout(() => {
+        backPressed = 0;
+      }, 2000);
+      return true;
+    }
   }
 
   startGame = async () => {
@@ -178,6 +196,7 @@ export default class StartGame extends Component {
   };
 
   start = async () => {
+    this.setState({ isLoading: true });
     let status = true;
     for (let i in this.state.players) {
       if (this.state.players[i].ready === false) {
@@ -187,6 +206,7 @@ export default class StartGame extends Component {
     }
 
     if (!status) {
+      this.setState({ isLoading: false });
       alert("All Players are not ready.");
       return;
     }
@@ -197,8 +217,10 @@ export default class StartGame extends Component {
         .child(this.state.gameID)
         .child("gameStatus")
         .update({ start: true });
+      this.setState({ isLoading: false });
     } catch (error) {
-      alert("ERROR 2 " + error);
+      this.setState({ isLoading: false });
+      alert("Please try again");
     }
   };
 
@@ -257,90 +279,113 @@ export default class StartGame extends Component {
   };
 
   render() {
-    return (
-      this.state.playersLoaded && (
+    return this.state.isLoading ? (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#130B21",
+          paddingTop: StatusBar.currentHeight,
+        }}
+      >
+        <View
+          style={{ flex: 3, alignItems: "center", justifyContent: "center" }}
+        >
+          <MaterialIndicator color={"#2e424d"} size={50} color={"#EC3D6C"} />
+        </View>
         <View
           style={{
             flex: 1,
-            paddingTop: StatusBar.currentHeight,
-            backgroundColor: "#130B21",
+            marginTop: 40,
+            marginHorizontal: 20,
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <View
+          <Text style={{ color: "#EC3D6C", fontSize: 16, fontWeight: "bold" }}>
+            We are starting the game
+          </Text>
+        </View>
+      </View>
+    ) : (
+      <View
+        style={{
+          flex: 1,
+          paddingTop: StatusBar.currentHeight,
+          backgroundColor: "#130B21",
+        }}
+      >
+        <View
+          style={{
+            margin: 20,
+            justifyContent: "center",
+            alignItems: "center",
+            height: 140,
+            borderBottomWidth: 0.5,
+            borderColor: "#EC3D6C",
+          }}
+        >
+          <Text style={{ fontSize: 24, fontWeight: "bold", color: "#EC3D6C" }}>
+            Game Code - "{this.state.gameCode}"
+          </Text>
+          <Text
             style={{
-              margin: 20,
-              justifyContent: "center",
-              alignItems: "center",
-              height: 140,
-              borderBottomWidth: 0.5,
-              borderColor: "#EC3D6C",
+              fontSize: 14,
+              fontWeight: "500",
+              fontStyle: "italic",
+              color: "#eee",
             }}
           >
-            <Text
-              style={{ fontSize: 24, fontWeight: "bold", color: "#EC3D6C" }}
-            >
-              Game Code - "{this.state.gameCode}"
-            </Text>
-            <Text
+            Share with your friends.
+          </Text>
+        </View>
+
+        <View style={{ flex: 1, margin: 20 }}>
+          <FlatList
+            data={this.state.players}
+            renderItem={({ item }, index) => this.playerDisplay(item, index)}
+            keyExtractor={(item, index) => index.toString()}
+            numColumns={3}
+            contentContainerStyle={{ alignItems: "center" }}
+          />
+
+          {/* // */}
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <TouchableOpacity
+              onPress={
+                this.state.userKey === this.state.admin
+                  ? this.start
+                  : this.toggleReady
+              }
               style={{
-                fontSize: 14,
-                fontWeight: "500",
-                fontStyle: "italic",
-                color: "#eee",
+                borderRadius: 20,
+                width: 100,
+                height: 50,
+                backgroundColor: "#F0B342",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: 10,
               }}
             >
-              Share with your friends.
-            </Text>
+              {this.state.userKey === this.state.admin ? (
+                <Text style={{ fontSize: 18, fontWeight: "700" }}>Start</Text>
+              ) : (
+                <Text style={{ fontSize: 18, fontWeight: "700" }}>
+                  {this.state.ready ? "Cancel" : "Ready"}
+                </Text>
+              )}
+            </TouchableOpacity>
           </View>
-
-          <View style={{ flex: 1, margin: 20 }}>
-            <FlatList
-              data={this.state.players}
-              renderItem={({ item }, index) => this.playerDisplay(item, index)}
-              keyExtractor={(item, index) => index.toString()}
-              numColumns={3}
-              contentContainerStyle={{ alignItems: "center" }}
-            />
-
-            {/* // */}
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <TouchableOpacity
-                onPress={
-                  this.state.userKey === this.state.admin
-                    ? this.start
-                    : this.toggleReady
-                }
-                style={{
-                  borderRadius: 20,
-                  width: 100,
-                  height: 50,
-                  backgroundColor: "#F0B342",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: 10,
-                }}
-              >
-                {this.state.userKey === this.state.admin ? (
-                  <Text style={{ fontSize: 18, fontWeight: "700" }}>Start</Text>
-                ) : (
-                  <Text style={{ fontSize: 18, fontWeight: "700" }}>
-                    {this.state.ready ? "Cancel" : "Ready"}
-                  </Text>
-                )}
-              </TouchableOpacity>
-            </View>
-            {/* // */}
-            {this.state.start
-              ? this.props.navigation.navigate("GameScreen", {
-                  admin: this.state.admin,
-                  gameID: this.state.gameID,
-                  players: this.state.players,
-                  playerID: this.state.playerID,
-                })
-              : null}
-          </View>
+          {/* // */}
+          {this.state.start
+            ? this.props.navigation.navigate("GameScreen", {
+                admin: this.state.admin,
+                gameID: this.state.gameID,
+                players: this.state.players,
+                playerID: this.state.playerID,
+              })
+            : null}
         </View>
-      )
+      </View>
     );
   }
 }

@@ -6,6 +6,7 @@ import {
   TextInput,
   StatusBar,
   TouchableOpacity,
+  ToastAndroid,
 } from "react-native";
 
 import { store } from "../helpers/redux-store";
@@ -14,6 +15,8 @@ import questions from "../helpers/questions/friends";
 import * as firebase from "firebase/app";
 import("firebase/auth");
 import("firebase/database");
+
+let backPressed = 0;
 
 export default class GameScreen extends Component {
   constructor(props) {
@@ -52,9 +55,24 @@ export default class GameScreen extends Component {
       }
     );
 
-    BackHandler.addEventListener("hardwareBackPress", () =>
-      this.props.navigation.navigate("GameSelect")
+    BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackButton.bind(this)
     );
+  }
+
+  handleBackButton() {
+    if (backPressed > 0) {
+      this.props.navigation.navigate("GameSelect");
+      backPressed = 0;
+    } else {
+      backPressed++;
+      ToastAndroid.show("Press Again To Exit the Game", ToastAndroid.SHORT);
+      setTimeout(() => {
+        backPressed = 0;
+      }, 2000);
+      return true;
+    }
   }
 
   questionMake = async () => {

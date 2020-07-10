@@ -7,6 +7,7 @@ import {
   StatusBar,
   TouchableOpacity,
   FlatList,
+  ToastAndroid,
 } from "react-native";
 
 import { store } from "../helpers/redux-store";
@@ -14,6 +15,8 @@ import { store } from "../helpers/redux-store";
 import * as firebase from "firebase/app";
 import("firebase/auth");
 import("firebase/database");
+
+let backPressed = 0;
 
 export default class AnswerState extends Component {
   constructor(props) {
@@ -49,7 +52,26 @@ export default class AnswerState extends Component {
     );
 
     console.log(playersAnswered);
+
+    BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackButton.bind(this)
+    );
   };
+
+  handleBackButton() {
+    if (backPressed > 0) {
+      this.props.navigation.navigate("GameSelect");
+      backPressed = 0;
+    } else {
+      backPressed++;
+      ToastAndroid.show("Press Again To Exit the Game", ToastAndroid.SHORT);
+      setTimeout(() => {
+        backPressed = 0;
+      }, 2000);
+      return true;
+    }
+  }
 
   changesMade = async () => {
     try {

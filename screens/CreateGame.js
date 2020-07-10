@@ -12,6 +12,7 @@ import {
 import { snapshotToArray } from "../helpers/snapshot";
 import { codeGenerator } from "../helpers/CodeGenerator";
 import { store } from "../helpers/redux-store";
+import { MaterialIndicator } from "react-native-indicators";
 
 import * as firebase from "firebase/app";
 import("firebase/auth");
@@ -23,6 +24,7 @@ export default class CreateGame extends Component {
     this.state = {
       user: {},
       numberOfRounds: "",
+      isLoading: false,
     };
   }
 
@@ -44,6 +46,8 @@ export default class CreateGame extends Component {
       alert("Select number of rounds");
       return;
     }
+
+    this.setState({ isLoading: true });
 
     try {
       let code = codeGenerator();
@@ -95,7 +99,8 @@ export default class CreateGame extends Component {
           })
         );
     } catch (error) {
-      alert(error);
+      this.setState({ isLoading: false });
+      alert("Problem in creating game");
     }
   };
 
@@ -127,7 +132,34 @@ export default class CreateGame extends Component {
   };
 
   render() {
-    return (
+    return this.state.isLoading ? (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#130B21",
+          paddingTop: StatusBar.currentHeight,
+        }}
+      >
+        <View
+          style={{ flex: 3, alignItems: "center", justifyContent: "center" }}
+        >
+          <MaterialIndicator color={"#2e424d"} size={50} color={"#EC3D6C"} />
+        </View>
+        <View
+          style={{
+            flex: 1,
+            marginTop: 40,
+            marginHorizontal: 20,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: "#EC3D6C", fontSize: 16, fontWeight: "bold" }}>
+            We are creating your game
+          </Text>
+        </View>
+      </View>
+    ) : (
       <View
         style={{
           flex: 1,

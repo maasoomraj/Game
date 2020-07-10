@@ -7,6 +7,7 @@ import {
   StatusBar,
   TouchableOpacity,
   FlatList,
+  ToastAndroid,
 } from "react-native";
 
 import { store } from "../helpers/redux-store";
@@ -14,6 +15,8 @@ import { store } from "../helpers/redux-store";
 import * as firebase from "firebase/app";
 import("firebase/auth");
 import("firebase/database");
+
+let backPressed = 0;
 
 export default class ChooseAnswer extends Component {
   constructor(props) {
@@ -46,7 +49,26 @@ export default class ChooseAnswer extends Component {
         this.allPicked();
       }
     );
+
+    BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackButton.bind(this)
+    );
   };
+
+  handleBackButton() {
+    if (backPressed > 0) {
+      this.props.navigation.navigate("GameSelect");
+      backPressed = 0;
+    } else {
+      backPressed++;
+      ToastAndroid.show("Press Again To Exit the Game", ToastAndroid.SHORT);
+      setTimeout(() => {
+        backPressed = 0;
+      }, 2000);
+      return true;
+    }
+  }
 
   allPicked = () => {
     let numberOfPicked = 0;
@@ -115,7 +137,13 @@ export default class ChooseAnswer extends Component {
                 alignItems: "center",
               }}
             >
-              <Text style={{ fontSize: 14, fontWeight: "bold" }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: "bold",
+                  paddingHorizontal: 10,
+                }}
+              >
                 {item.answer}
               </Text>
             </View>
@@ -172,29 +200,21 @@ export default class ChooseAnswer extends Component {
           flex: 1,
           paddingTop: StatusBar.currentHeight,
           backgroundColor: "#130B21",
+          padding: 20,
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        <View
+        <Text
           style={{
-            margin: 20,
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: 100,
-            borderBottomWidth: 0.5,
-            borderColor: "#EC3D6C",
+            fontSize: 22,
+            fontWeight: "bold",
+            color: "#EC3D6C",
+            paddingHorizontal: 10,
           }}
         >
-          <Text
-            style={{
-              fontSize: 22,
-              fontWeight: "bold",
-              color: "#EC3D6C",
-              paddingHorizontal: 10,
-            }}
-          >
-            Wait for other players to choose their answer
-          </Text>
-        </View>
+          Wait for other players to choose their answer
+        </Text>
       </View>
     ) : (
       <View
