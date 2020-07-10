@@ -18,6 +18,7 @@
       "supportsTablet": true
     },
     "android": {
+      "softwareKeyboardLayoutMode": "pan",
       "package": "com.masoomraj.Game",
       "versionCode": 2
     },

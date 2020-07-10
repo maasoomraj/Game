@@ -88,7 +88,7 @@ export default class GameScreen extends Component {
               this.state.players[
                 Math.floor(Math.random() * this.state.players.length)
               ].name,
-              Math.floor(Math.random() * 31)
+              Math.floor(Math.random() * 77)
             ),
           });
       } catch (error) {
