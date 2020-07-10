@@ -225,6 +225,7 @@ export default class StartGame extends Component {
   };
 
   playerDisplay = (item, index) => {
+    let image = 0;
     return (
       <View
         style={{
@@ -235,10 +236,62 @@ export default class StartGame extends Component {
           marginBottom: 20,
         }}
       >
-        <Image
+        {/* <Image
           source={require("../assets/icons8-male-user-96.png")}
           style={{ width: 80, height: 80 }}
-        />
+        /> */}
+
+        {item.userKey === this.state.user.key && this.state.user.photoURL
+          ? (image = 1 && (
+              <Image
+                source={{ uri: this.state.user.photoURL }}
+                style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: 50,
+                }}
+              />
+            ))
+          : null}
+
+        {item.userKey === this.state.user.key && !this.state.user.photoURL
+          ? (image = 1 && (
+              <Image
+                source={require("../assets/icons8-male-user-96.png")}
+                style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: 50,
+                }}
+              />
+            ))
+          : null}
+
+        {!item.photo && !image
+          ? (image = 1 && (
+              <Image
+                source={require("../assets/icons8-male-user-96.png")}
+                style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: 50,
+                }}
+              />
+            ))
+          : null}
+        {item.photo && !image
+          ? (image = 1 && (
+              <Image
+                source={{ uri: item.photo }}
+                style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: 50,
+                }}
+              />
+            ))
+          : null}
+
         <View
           style={{
             flexDirection: "row",
@@ -265,7 +318,7 @@ export default class StartGame extends Component {
                 borderColor: "#000",
                 borderWidth: 0.1,
                 fontWeight: "bold",
-                marginHorizontal: 10,
+                marginHorizontal: 5,
               }}
             >
               ✓
@@ -339,7 +392,7 @@ export default class StartGame extends Component {
           </Text>
         </View>
 
-        <View style={{ flex: 1, margin: 20 }}>
+        <View style={{ flex: 1, marginVertical: 20, marginHorizontal: 5 }}>
           <FlatList
             data={this.state.players}
             renderItem={({ item }, index) => this.playerDisplay(item, index)}

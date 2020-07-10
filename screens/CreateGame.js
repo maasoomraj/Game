@@ -75,6 +75,7 @@ export default class CreateGame extends Component {
           answered: false,
           point: 0,
           picked: false,
+          photo: this.state.user.photoURL || "",
         });
 
       await firebase

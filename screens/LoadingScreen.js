@@ -30,6 +30,7 @@ export default class LoadingScreen extends Component {
             name: user.providerData[0].displayName,
             key: user.uid,
             email: user.providerData[0].email,
+            photoURL: user.providerData[0].photoURL,
           })
         );
         this.props.navigation.navigate("GameSelect", {

@@ -8,6 +8,7 @@ import {
   ImageBackground,
   BackHandler,
   ToastAndroid,
+  Image,
 } from "react-native";
 
 import * as firebase from "firebase/app";
@@ -76,12 +77,33 @@ export default class MainScreen extends Component {
             margin: 20,
             justifyContent: "center",
             alignItems: "center",
-            height: 140,
+            height: 160,
           }}
         >
-          <Text style={{ fontSize: 50, fontWeight: "bold", color: "#EC3D6C" }}>
-            Game
+          <Text style={{ fontSize: 26, fontWeight: "bold", color: "#EC3D6C" }}>
+            Spill the Truth
           </Text>
+          {!this.state.user.photoURL ? (
+            <Image
+              source={require("../assets/icons8-male-user-96.png")}
+              style={{
+                width: 80,
+                height: 80,
+                borderRadius: 50,
+                marginVertical: 10,
+              }}
+            />
+          ) : (
+            <Image
+              source={{ uri: this.state.user.photoURL }}
+              style={{
+                width: 80,
+                height: 80,
+                borderRadius: 50,
+                marginVertical: 10,
+              }}
+            />
+          )}
           <Text
             style={{
               fontSize: 20,

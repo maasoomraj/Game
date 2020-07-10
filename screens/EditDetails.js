@@ -10,12 +10,15 @@ import {
 } from "react-native";
 
 import { MaterialIndicator } from "react-native-indicators";
-
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
 import { store, SET_USER } from "../helpers/redux-store";
+// import prepareBlob from "../helpers/ImageHelpers";
 
 import * as firebase from "firebase/app";
 import("firebase/database");
 import("firebase/auth");
+import("firebase/storage");
 
 export default class EditDetails extends Component {
   constructor(props) {
@@ -25,10 +28,12 @@ export default class EditDetails extends Component {
       changeUsername: false,
       username: "",
       isLoading: false,
+      image: "",
     };
   }
 
   componentDidMount = () => {
+    console.log(store.getState().user);
     this.setState({ user: store.getState().user });
     BackHandler.addEventListener("hardwareBackPress", () =>
       this.props.navigation.navigate("GameSelect")
@@ -48,6 +53,7 @@ export default class EditDetails extends Component {
             name: user.providerData[0].displayName,
             key: user.uid,
             email: user.providerData[0].email,
+            photoURL: user.photoURL,
           })
         );
         this.setState({
@@ -62,6 +68,100 @@ export default class EditDetails extends Component {
       }
     } else {
       alert("Enter username");
+    }
+  };
+
+  chooseImage = async () => {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status !== "granted") {
+      alert("Sorry, we need camera roll permissions to make this work!");
+      return;
+    }
+
+    this.pickImage();
+    //
+  };
+
+  pickImage = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.5,
+      });
+      if (!result.cancelled) {
+        this.setState({ image: result.uri, isLoading: true });
+        this.uploadImage(result.uri);
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  prepareBlob = async (imageUri) => {
+    let blob = await new Promise((resolve, reject) => {
+      // new request
+      const xml = new XMLHttpRequest();
+
+      // On success, resolve it
+      xml.onload = function () {
+        resolve(xml.response);
+      };
+
+      // On error, throw error
+      xml.onerror = function (error) {
+        console.log(error);
+        reject(new TypeError("Image Upload Failed"));
+      };
+
+      // set the response type
+      xml.responseType = "blob";
+      // get the blob
+      xml.open("GET", imageUri, true);
+      // send the blob
+      xml.send();
+    });
+    return blob;
+  };
+
+  uploadImage = async (uri) => {
+    try {
+      const blob = await this.prepareBlob(uri);
+      const snapshot = await firebase
+        .storage()
+        .ref("images")
+        .child(this.state.user.key)
+        .put(blob);
+
+      let URL = await firebase
+        .storage()
+        .ref("images")
+        .child(this.state.user.key)
+        .getDownloadURL();
+
+      const user = await firebase.auth().currentUser;
+      await user.updateProfile({
+        photoURL: URL,
+      });
+
+      store.dispatch(
+        SET_USER({
+          name: user.providerData[0].displayName,
+          key: user.uid,
+          email: user.providerData[0].email,
+          photoURL: user.photoURL,
+        })
+      );
+      this.setState({
+        user: store.getState().user,
+        isLoading: false,
+      });
+    } catch (error) {
+      this.setState({
+        isLoading: false,
+      });
+      alert("Please try again");
     }
   };
 
@@ -104,7 +204,7 @@ export default class EditDetails extends Component {
         {/* Edit Deatils */}
         <View
           style={{
-            margin: 20,
+            margin: 10,
             justifyContent: "center",
             alignItems: "center",
             height: 140,
@@ -119,10 +219,55 @@ export default class EditDetails extends Component {
         {/* Edit Deatils */}
 
         <View style={{ flex: 1, marginTop: 20 }}>
-          <View style={{ height: 50 }}>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <View
+              style={{
+                width: 100,
+                height: 100,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {!this.state.user.photoURL ? (
+                <Image
+                  source={require("../assets/icons8-male-user-96.png")}
+                  style={{ width: 100, height: 100, borderRadius: 50 }}
+                />
+              ) : (
+                <Image
+                  source={{ uri: this.state.user.photoURL }}
+                  style={{ width: 100, height: 100, borderRadius: 50 }}
+                />
+              )}
+              <TouchableOpacity
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  right: 0,
+                  width: 30,
+                  height: 30,
+                  borderRadius: 15,
+                  backgroundColor: "#aaa",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onPress={this.chooseImage}
+              >
+                <Image
+                  source={require("../assets/edit1.png")}
+                  style={{
+                    width: 20,
+                    height: 20,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View style={{ height: 30, marginTop: 20 }}>
             <Text
               style={{
-                fontSize: 24,
+                fontSize: 20,
                 fontWeight: "400",
                 letterSpacing: 0.2,
                 color: "#84B168",
@@ -133,7 +278,7 @@ export default class EditDetails extends Component {
             </Text>
           </View>
           {this.state.changeUsername ? (
-            <View style={{ minHeight: 50, flexDirection: "row" }}>
+            <View style={{ minHeight: 30, flexDirection: "row" }}>
               {/* TextInput */}
               <View
                 style={{
@@ -194,7 +339,7 @@ export default class EditDetails extends Component {
               </View>
             </View>
           ) : (
-            <View style={{ minHeight: 50, flexDirection: "row" }}>
+            <View style={{ minHeight: 30, flexDirection: "row" }}>
               {/* Display Name */}
               <View
                 style={{
@@ -206,7 +351,7 @@ export default class EditDetails extends Component {
               >
                 <Text
                   style={{
-                    fontSize: 28,
+                    fontSize: 24,
                     fontWeight: "700",
                     letterSpacing: 0.2,
                     color: "#F0B342",

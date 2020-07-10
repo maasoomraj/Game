@@ -121,6 +121,7 @@ export default class JoinGame extends Component {
             answered: false,
             point: 0,
             picked: false,
+            photo: this.state.user.photoURL || "",
           });
       } else {
         playerID = playersMap.get(this.state.user.key).key;
