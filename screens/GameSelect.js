@@ -98,7 +98,7 @@ export default class MainScreen extends Component {
           {/* Edit Details */}
           <GradientClickable
             props={this.props}
-            nav={"CreateGame"}
+            nav={"EditDetails"}
             colors={["#0E1111", "#222A2A", "#343637", "#394249", "#3F484A"]}
             headerText={"Edit Details"}
             subText={"Change your username or password"}
