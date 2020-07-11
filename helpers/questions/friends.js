@@ -154,6 +154,68 @@ const questions = (name, number) => {
       return `What could ${name} give a thirty-minute impromptu lecture on ?`;
     case 76:
       return `If this group is a PUBG squad, who is the bot-killer ?`;
+    case 77:
+      return `If ${name} could make everyone in the world believe one thing (regardless of whether it’s true or not), what thing would he/she choose ?`;
+    case 78:
+      return `What is the thing ${name} is so incredibly terrible at, that he/she has given up ever doing it again ?`;
+    case 79:
+      return `If ${name} could add 4 hours to his/her day, what would he/she spend that 4 hours doing ?`;
+    case 80:
+      return `What’s your funniest memory about ${name} ?`;
+    case 81:
+      return `If ${name} were given the ability to make one new trend and it be instantly popular, what trend would he/she create ?`;
+    case 82:
+      return `What’s ${name}'s phone/computer wallpaper ?`;
+    case 83:
+      return `What makes ${name} special and unique ?`;
+    case 84:
+      return `What would be the last movie ${name} would like to see before he/she die ?`;
+    case 85:
+      return `What’s ${name} best one-liner ?`;
+    case 86:
+      return `What’s the worst injury ${name} ever got ?`;
+    case 87:
+      return `Suhaagraat with ${name} is like ?`;
+    case 88:
+      return `If ${name} were the opposite sex for one hour, what would he/she do ?`;
+    case 89:
+      return `Which player in this game would ${name} like to swap lives with for a week ?`;
+    case 90:
+      return `What’s ${name}'s wildest fantasy ?`;
+    case 91:
+      return `What’s the first thing ${name} would do if he/she were invisible ?`;
+    case 92:
+      return `Have ${name} ever been hinted by someone of the same sex ?`;
+    case 93:
+      return `Have ${name} ever been hinted by someone of the opposite sex ? WHat did he/she do next ?`;
+    case 94:
+      return `Has ${name} ever given hint to someone of the same sex ?`;
+    case 95:
+      return `What is ${name}'s worst outfit ?`;
+    case 96:
+      return `Who is the one in the group who wants to party 24/7 ?`;
+    case 97:
+      return `Who is the one in the group who overshare every aspect of his/her life ?`;
+    case 98:
+      return `Who is the the mumma of the group ?`;
+    case 99:
+      return `If this group is a PUBG squad, who is the bot-killer ?`;
+    case 100:
+      return `Who is the absolute mess ?`;
+    case 101:
+      return `Who is the selfie queen of the group ?`;
+    case 102:
+      return `Who is the one that's always late to everything ?`;
+    case 103:
+      return `Who is the joker of the group ?`;
+    case 104:
+      return `Who is the total drama queen in this group ?`;
+    case 105:
+      return `Who is the one who has a laugh that’s funnier than the actual joke ?`;
+    case 106:
+      return `Who is the most negative person in this group ?`;
+    default:
+      return `Who is the rondu in the group ?`;
   }
 };
 

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
   ToastAndroid,
+  Image,
 } from "react-native";
 
 import { store } from "../helpers/redux-store";
@@ -123,6 +124,7 @@ export default class AnswerState extends Component {
   };
 
   playerDisplay = (item, index) => {
+    let image = 0;
     return (
       <View
         style={{
@@ -136,6 +138,64 @@ export default class AnswerState extends Component {
           borderRadius: 30,
         }}
       >
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            marginLeft: 20,
+          }}
+        >
+          {item.userKey === this.state.user.key && this.state.user.photoURL
+            ? (image = 1 && (
+                <Image
+                  source={{ uri: this.state.user.photoURL }}
+                  style={{
+                    width: 46,
+                    height: 46,
+                    borderRadius: 23,
+                  }}
+                />
+              ))
+            : null}
+
+          {item.userKey === this.state.user.key && !this.state.user.photoURL
+            ? (image = 1 && (
+                <Image
+                  source={require("../assets/icons8-male-user-96.png")}
+                  style={{
+                    width: 46,
+                    height: 46,
+                    borderRadius: 23,
+                  }}
+                />
+              ))
+            : null}
+
+          {!item.photo && !image
+            ? (image = 1 && (
+                <Image
+                  source={require("../assets/icons8-male-user-96.png")}
+                  style={{
+                    width: 46,
+                    height: 46,
+                    borderRadius: 23,
+                  }}
+                />
+              ))
+            : null}
+          {item.photo && !image
+            ? (image = 1 && (
+                <Image
+                  source={{ uri: item.photo }}
+                  style={{
+                    width: 46,
+                    height: 46,
+                    borderRadius: 23,
+                  }}
+                />
+              ))
+            : null}
+        </View>
         <View style={{ flex: 1, justifyContent: "center" }}>
           <Text style={{ paddingLeft: 30, fontWeight: "bold", fontSize: 20 }}>
             {item.name}
