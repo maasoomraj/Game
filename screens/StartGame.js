@@ -10,6 +10,7 @@ import {
   Image,
   ToastAndroid,
   FlatList,
+  Clipboard,
 } from "react-native";
 
 import { snapshotToArray } from "../helpers/snapshot";
@@ -101,18 +102,8 @@ export default class StartGame extends Component {
       .child("gameStatus")
       .on("child_changed", (snapshot) => {
         this.setState({ start: snapshot.val() });
-        // console.log("CHANged");
-        // console.log(snapshot.val());
       });
   };
-
-  // async componentWillUnmount() {
-  //   try {
-  //     await firebase.database().ref(`users`).child(this.state.userKey).remove();
-  //   } catch (error) {
-  //     alert("ERROR 3 " + error);
-  //   }
-  // }
 
   receive = async () => {
     try {
