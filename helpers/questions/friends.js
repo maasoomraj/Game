@@ -187,7 +187,7 @@ const questions = (name, number) => {
     case 92:
       return `Have ${name} ever been hinted by someone of the same sex ?`;
     case 93:
-      return `Have ${name} ever been hinted by someone of the opposite sex ? WHat did he/she do next ?`;
+      return `Have ${name} ever been hinted by someone of the opposite sex ? What did he/she do next ?`;
     case 94:
       return `Has ${name} ever given hint to someone of the same sex ?`;
     case 95:

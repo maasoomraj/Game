@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
   ToastAndroid,
+  Image,
 } from "react-native";
 
 import { store } from "../helpers/redux-store";
@@ -23,6 +24,7 @@ export default class LeaderBoard extends Component {
     super(props);
     this.state = {
       matchEnded: false,
+      maxValue: 0,
     };
   }
 
@@ -158,36 +160,135 @@ export default class LeaderBoard extends Component {
     }
   };
 
+  maxValue = 0;
+
   playerDisplay = (item, index) => {
+    let winner = 0;
+    let image = 0;
+    if (index === 0) {
+      winner = 1;
+      this.maxValue = item.point;
+    }
+
+    if (index) {
+      if (item.point === this.maxValue) {
+        winner = 1;
+      }
+    }
+
+    console.log(winner + " " + index);
     return (
-      <TouchableOpacity onPress={() => this.submit(item)}>
+      // <TouchableOpacity onPress={() => this.submit(item)}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          margin: 10,
+          borderColor: "#000",
+          borderWidth: 0.4,
+          minHeight: 50,
+          backgroundColor: "#ADD8E6",
+          borderRadius: 30,
+        }}
+      >
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            marginLeft: 20,
+          }}
+        >
+          {item.userKey === this.state.user.key && this.state.user.photoURL
+            ? (image = 1 && (
+                <Image
+                  source={{ uri: this.state.user.photoURL }}
+                  style={{
+                    width: 46,
+                    height: 46,
+                    borderRadius: 23,
+                  }}
+                />
+              ))
+            : null}
+
+          {item.userKey === this.state.user.key && !this.state.user.photoURL
+            ? (image = 1 && (
+                <Image
+                  source={require("../assets/icons8-male-user-96.png")}
+                  style={{
+                    width: 46,
+                    height: 46,
+                    borderRadius: 23,
+                  }}
+                />
+              ))
+            : null}
+
+          {!item.photo && !image
+            ? (image = 1 && (
+                <Image
+                  source={require("../assets/icons8-male-user-96.png")}
+                  style={{
+                    width: 46,
+                    height: 46,
+                    borderRadius: 23,
+                  }}
+                />
+              ))
+            : null}
+          {item.photo && !image
+            ? (image = 1 && (
+                <Image
+                  source={{ uri: item.photo }}
+                  style={{
+                    width: 46,
+                    height: 46,
+                    borderRadius: 23,
+                  }}
+                />
+              ))
+            : null}
+        </View>
         <View
           style={{
             flex: 1,
+            marginLeft: 25,
+            alignItems: "center",
             flexDirection: "row",
-            margin: 10,
-            borderColor: "#000",
-            borderWidth: 0.4,
-            minHeight: 50,
-            backgroundColor: "#C27AC0",
-            borderRadius: 30,
           }}
         >
+          <Text style={{ fontSize: 16, fontWeight: "bold" }}>{item.name}</Text>
+          <Text style={{ fontSize: 14, fontStyle: "italic" }}>
+            {" "}
+            - {item.point} points
+          </Text>
+        </View>
+        {winner ? (
           <View
             style={{
-              flex: 1,
+              width: 50,
               justifyContent: "center",
               alignItems: "center",
+              marginRight: 20,
             }}
           >
-            <Text style={{ fontSize: 14, fontWeight: "bold" }}>
-              {item.name} - {item.point}
-            </Text>
+            <Image
+              source={require("../assets/winner.png")}
+              style={{ width: 40, height: 40 }}
+            />
           </View>
-        </View>
-      </TouchableOpacity>
+        ) : null}
+      </View>
+      // </TouchableOpacity>
     );
   };
+
+  compare(a, b) {
+    if (a.point < b.point) return 1;
+    if (b.point < a.point) return -1;
+
+    return 0;
+  }
 
   render() {
     return (
@@ -219,11 +320,13 @@ export default class LeaderBoard extends Component {
             LeaderBoard
           </Text>
         </View>
-        <FlatList
-          data={this.state.players}
-          renderItem={({ item }, index) => this.playerDisplay(item, index)}
-          keyExtractor={(item, index) => index.toString()}
-        />
+        {this.state.players && this.state.players.length > 1 && (
+          <FlatList
+            data={this.state.players.sort(this.compare)}
+            renderItem={({ item, index }) => this.playerDisplay(item, index)}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        )}
 
         <View
           style={{

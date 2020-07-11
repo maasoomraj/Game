@@ -139,6 +139,10 @@ export default class GameScreen extends Component {
   };
 
   submit = async () => {
+    if (!this.state.answer) {
+      alert("Enter an answer !");
+      return;
+    }
     await firebase
       .database()
       .ref("game")

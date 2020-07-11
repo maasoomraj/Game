@@ -78,7 +78,7 @@ export default class ChooseAnswer extends Component {
       }
     }
     if (numberOfPicked === this.state.players.length) {
-      this.props.navigation.navigate("LeaderBoard", {
+      this.props.navigation.navigate("ScoreBoard", {
         players: this.state.players,
         gameID: this.state.gameID,
         playerID: this.state.playerID,
@@ -126,7 +126,7 @@ export default class ChooseAnswer extends Component {
               borderColor: "#000",
               borderWidth: 0.4,
               minHeight: 50,
-              backgroundColor: "#C27AC0",
+              backgroundColor: "#99EE99",
               borderRadius: 30,
             }}
           >
