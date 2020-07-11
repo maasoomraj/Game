@@ -56,15 +56,15 @@ export default class DeveloperInfo extends Component {
         >
           <Text
             style={{
-              color: "#EC3D6C",
+              color: "yellow",
               fontSize: 20,
-              fontFamily: "sans-serif-medium",
+              fontFamily: "sans-serif-light",
               fontWeight: "500",
               letterSpacing: 0.2,
-              textAlign: "justify",
+              textAlign: "center",
             }}
           >
-            Hi ! I am Masoom Raj, a Sophomore, pursuing BTech in Computer
+            Hi !{"\n"}I am Masoom Raj, a Sophomore, pursuing BTech in Computer
             Science Engineering from Indian Institute of Technology Jodhpur.
           </Text>
           <Text
@@ -80,8 +80,22 @@ export default class DeveloperInfo extends Component {
           >
             In case of bugs, crash or any feedback, please contact me.
           </Text>
+
+          <Text
+            style={{
+              color: "#eee",
+              fontSize: 20,
+              fontFamily: "sans-serif-light",
+              fontWeight: "500",
+              letterSpacing: 0.2,
+              textAlign: "justify",
+              paddingTop: 30,
+            }}
+          >
+            Email - raj.8@iitj.ac.in
+          </Text>
         </View>
-        <View style={{ flex: 1, flexDirection: "row" }}>
+        {/* <View style={{ flex: 1, flexDirection: "row" }}>
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           ></View>
@@ -128,8 +142,10 @@ export default class DeveloperInfo extends Component {
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           ></View>
-        </View>
-        <View style={{ flex: 1, alignItems: "center" }}>
+        </View> */}
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
           <Text
             style={{
               color: "#EC3D6C",

@@ -374,46 +374,74 @@ export default class EditDetails extends Component {
           )}
 
           {/* Password */}
-          <View style={{ minHeight: 30, flexDirection: "row", marginTop: 40 }}>
-            {/* Display Name */}
-            <View
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <TouchableOpacity
               style={{
-                flex: 1,
                 justifyContent: "center",
                 alignItems: "center",
-                paddingHorizontal: 20,
+                width: 250,
+                minHeight: 50,
+                marginTop: 40,
+                backgroundColor: "#F0B342",
+                borderRadius: 30,
               }}
+              onPress={() => this.props.navigation.navigate("ChangePassword")}
             >
+              {/* <View
+              style={{
+                
+                flexDirection: "row",
+                
+                
+                
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            > */}
+              {/* Display Name */}
+              {/* <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingHorizontal: 20,
+                }}
+              > */}
               <Text
                 style={{
-                  fontSize: 24,
+                  fontSize: 22,
                   fontWeight: "700",
+                  fontFamily: "sans-serif-light",
                   letterSpacing: 0.2,
-                  color: "#F0B342",
+                  color: "#000",
                 }}
               >
                 Change Password
               </Text>
-            </View>
+              {/* </View> */}
 
-            {/* Change Username Button */}
-            <View
-              style={{
-                width: 80,
-                justifyContent: "center",
-                alignItems: "center",
-                paddingHorizontal: 20,
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate("ChangePassword")}
+              {/* Change Username Button */}
+              {/* <View
+                style={{
+                  width: 80,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingHorizontal: 20,
+                }}
               >
-                <Image
-                  source={require("../assets/edit.png")}
-                  style={{ width: 30, height: 30 }}
-                />
-              </TouchableOpacity>
-            </View>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate("ChangePassword")
+                  }
+                >
+                  <Image
+                    source={require("../assets/edit.png")}
+                    style={{ width: 30, height: 30 }}
+                  />
+                </TouchableOpacity>
+              </View> */}
+              {/* </View> */}
+            </TouchableOpacity>
           </View>
         </View>
       </View>

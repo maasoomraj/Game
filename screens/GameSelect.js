@@ -81,7 +81,7 @@ export default class MainScreen extends Component {
           }}
         >
           <Text style={{ fontSize: 26, fontWeight: "bold", color: "#EC3D6C" }}>
-            Spill the Truth
+            Twisty Tale
           </Text>
           {!this.state.user.photoURL ? (
             <Image

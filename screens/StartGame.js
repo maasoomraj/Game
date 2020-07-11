@@ -80,6 +80,11 @@ export default class StartGame extends Component {
     );
   }
 
+  writeToClipboard = async () => {
+    await Clipboard.setString(this.state.gameCode);
+    ToastAndroid.show("Copied to Clipboard!", ToastAndroid.SHORT);
+  };
+
   handleBackButton() {
     if (backPressed > 0) {
       this.props.navigation.navigate("GameSelect");
@@ -377,16 +382,21 @@ export default class StartGame extends Component {
           <Text style={{ fontSize: 24, fontWeight: "bold", color: "#EC3D6C" }}>
             Game Code - "{this.state.gameCode}"
           </Text>
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: "500",
-              fontStyle: "italic",
-              color: "#eee",
-            }}
-          >
-            Share with your friends.
-          </Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text
+              style={{
+                fontSize: 14,
+                fontWeight: "500",
+                fontStyle: "italic",
+                color: "#eee",
+              }}
+            >
+              {"Share with your friends.  "}
+            </Text>
+            <TouchableOpacity onPress={this.writeToClipboard}>
+              <Text style={{ color: "#eda" }}>( Copy )</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <View style={{ flex: 1, marginVertical: 20, marginHorizontal: 5 }}>

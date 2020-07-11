@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "Game",
-    "slug": "Game",
+    "name": "Twisty Tale",
+    "slug": "Twisty Tale",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icons8-user-group-96.png",
+    "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/bg1.png",
       "resizeMode": "cover",
