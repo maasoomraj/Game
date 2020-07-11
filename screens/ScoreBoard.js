@@ -12,6 +12,7 @@ import {
 } from "react-native";
 
 import { store } from "../helpers/redux-store";
+import { MaterialIndicator } from "react-native-indicators";
 
 import * as firebase from "firebase/app";
 import("firebase/auth");
@@ -25,6 +26,7 @@ export default class ScoreBoard extends Component {
     this.state = {
       matchEnded: false,
       maxValue: 0,
+      isLoading: false,
     };
   }
 
@@ -34,10 +36,10 @@ export default class ScoreBoard extends Component {
     const gameID = navigation.getParam("gameID");
     const playerID = navigation.getParam("playerID");
     const admin = navigation.getParam("admin");
-    console.log("LEADERBOARD");
-    console.log(store.getState().user);
-    console.log("admin");
-    console.log(admin);
+    // console.log("LEADERBOARD");
+    // console.log(store.getState().user);
+    // console.log("admin");
+    // console.log(admin);
 
     this.setState(
       {
@@ -50,7 +52,7 @@ export default class ScoreBoard extends Component {
       () => {
         this.getCounter();
         this.changesMade();
-        this.makeChanges();
+        // this.makeChanges();
       }
     );
 
@@ -83,9 +85,6 @@ export default class ScoreBoard extends Component {
         .child("gameStatus")
         .once("value");
 
-      console.log(gameStatus.val());
-      console.log(gameStatus.val().counter);
-      console.log(gameStatus.val().rounds);
       await firebase
         .database()
         .ref("game")
@@ -93,28 +92,47 @@ export default class ScoreBoard extends Component {
         .child("gameStatus")
         .update({ counter: gameStatus.val().counter + 1 });
       if (gameStatus.val().counter + 1 === gameStatus.val().rounds) {
-        console.log("FINAL");
         setTimeout(() => {
-          this.props.navigation.navigate("FinalLeaderBoard", {
+          this.props.navigation.navigate("LeaderBoard", {
             admin: this.state.admin,
             gameID: this.state.gameID,
             players: this.state.players,
             playerID: this.state.playerID,
           });
-        }, 5000);
+        }, 7000);
       } else {
-        console.log("CONTINUE ROUNDS");
-        setTimeout(() => {
-          this.props.navigation.navigate("GameScreen", {
-            admin: this.state.admin,
-            gameID: this.state.gameID,
-            players: this.state.players,
-            playerID: this.state.playerID,
-          });
-        }, 5000);
+        setTimeout(async () => {
+          try {
+            this.setState({ isLoading: true });
+            await firebase
+              .database()
+              .ref("game")
+              .child(this.state.gameID)
+              .child("players")
+              .child(this.state.playerID)
+              .update(
+                {
+                  score: 0,
+                  picked: false,
+                  answer: "",
+                  answered: false,
+                },
+                () => {
+                  this.props.navigation.navigate("GameScreen", {
+                    admin: this.state.admin,
+                    gameID: this.state.gameID,
+                    players: this.state.players,
+                    playerID: this.state.playerID,
+                  });
+                }
+              );
+          } catch (error) {
+            alert("Problem Loading Page");
+          }
+        }, 7000);
       }
     } catch (error) {
-      alert(error);
+      alert("Problem Loading Page");
     }
   };
 
@@ -138,47 +156,31 @@ export default class ScoreBoard extends Component {
           });
         });
     } catch (error) {
-      alert(error);
+      alert("Problem Loading Page");
     }
   };
 
-  makeChanges = async () => {
-    try {
-      await firebase
-        .database()
-        .ref("game")
-        .child(this.state.gameID)
-        .child("players")
-        .child(this.state.playerID)
-        .update({
-          picked: false,
-          answer: "",
-          answered: false,
-        });
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  maxValue = 0;
+  //   makeChanges = async () => {
+  //     try {
+  //       await firebase
+  //         .database()
+  //         .ref("game")
+  //         .child(this.state.gameID)
+  //         .child("players")
+  //         .child(this.state.playerID)
+  //         .update({
+  //           picked: false,
+  //           answer: "",
+  //           answered: false,
+  //         });
+  //     } catch (error) {
+  //       alert(error);
+  //     }
+  //   };
 
   playerDisplay = (item, index) => {
-    let winner = 0;
     let image = 0;
-    if (index === 0) {
-      winner = 1;
-      this.maxValue = item.point;
-    }
-
-    if (index) {
-      if (item.point === this.maxValue) {
-        winner = 1;
-      }
-    }
-
-    console.log(winner + " " + index);
     return (
-      // <TouchableOpacity onPress={() => this.submit(item)}>
       <View
         style={{
           flex: 1,
@@ -187,7 +189,7 @@ export default class ScoreBoard extends Component {
           borderColor: "#000",
           borderWidth: 0.4,
           minHeight: 50,
-          backgroundColor: "#ADD8E6",
+          backgroundColor: "#EFB8BD",
           borderRadius: 30,
         }}
       >
@@ -257,29 +259,14 @@ export default class ScoreBoard extends Component {
             flexDirection: "row",
           }}
         >
-          <Text style={{ fontSize: 16, fontWeight: "bold" }}>{item.name}</Text>
-          <Text style={{ fontSize: 14, fontStyle: "italic" }}>
-            {" "}
-            - {item.point} points
+          <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+            {item.name} + {item.score}
+          </Text>
+          <Text style={{ fontSize: 16, fontStyle: "italic" }}>
+            {"  "}= {item.point} points
           </Text>
         </View>
-        {winner ? (
-          <View
-            style={{
-              width: 50,
-              justifyContent: "center",
-              alignItems: "center",
-              marginRight: 20,
-            }}
-          >
-            <Image
-              source={require("../assets/winner.png")}
-              style={{ width: 40, height: 40 }}
-            />
-          </View>
-        ) : null}
       </View>
-      // </TouchableOpacity>
     );
   };
 
@@ -291,7 +278,34 @@ export default class ScoreBoard extends Component {
   }
 
   render() {
-    return (
+    return this.state.isLoading ? (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#130B21",
+          paddingTop: StatusBar.currentHeight,
+        }}
+      >
+        <View
+          style={{ flex: 3, alignItems: "center", justifyContent: "center" }}
+        >
+          <MaterialIndicator color={"#2e424d"} size={50} color={"#EC3D6C"} />
+        </View>
+        <View
+          style={{
+            flex: 1,
+            marginTop: 40,
+            marginHorizontal: 20,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: "#EC3D6C", fontSize: 16, fontWeight: "bold" }}>
+            We are making new question for you ..
+          </Text>
+        </View>
+      </View>
+    ) : (
       <View
         style={{
           flex: 1,
@@ -317,7 +331,7 @@ export default class ScoreBoard extends Component {
               paddingHorizontal: 10,
             }}
           >
-            LeaderBoard
+            ScoreBoard
           </Text>
         </View>
         {this.state.players && this.state.players.length > 1 && (
@@ -338,7 +352,7 @@ export default class ScoreBoard extends Component {
           }}
         >
           <Text style={{ color: "#EC3D6C", fontSize: 16 }}>
-            Please Wait...we are processing !
+            You will directed to new question ...
           </Text>
         </View>
       </View>

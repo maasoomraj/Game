@@ -33,7 +33,7 @@ export default class EditDetails extends Component {
   }
 
   componentDidMount = () => {
-    console.log(store.getState().user);
+    // console.log(store.getState().user);
     this.setState({ user: store.getState().user });
     BackHandler.addEventListener("hardwareBackPress", () =>
       this.props.navigation.navigate("GameSelect")
@@ -95,7 +95,7 @@ export default class EditDetails extends Component {
         this.uploadImage(result.uri);
       }
     } catch (error) {
-      alert(error);
+      alert("Problem Loading Page");
     }
   };
 
@@ -111,7 +111,7 @@ export default class EditDetails extends Component {
 
       // On error, throw error
       xml.onerror = function (error) {
-        console.log(error);
+        // console.log(error);
         reject(new TypeError("Image Upload Failed"));
       };
 

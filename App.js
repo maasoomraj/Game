@@ -16,7 +16,6 @@ import GameScreen from "./screens/GameScreen";
 import AnswerState from "./screens/AnswerState";
 import ChooseAnswer from "./screens/ChooseAnswer";
 import LeaderBoard from "./screens/LeaderBoard";
-import FinalLeaderBoard from "./screens/FinalLeaderBoard";
 import DeveloperInfo from "./screens/DeveloperInfo";
 import EditDetails from "./screens/EditDetails";
 import ChangePassword from "./screens/ChangePassword";
@@ -50,7 +49,6 @@ const AppSwitchNavigator = createSwitchNavigator({
   AnswerState,
   ChooseAnswer,
   LeaderBoard,
-  FinalLeaderBoard,
   DeveloperInfo,
   EditDetails,
   ChangePassword,

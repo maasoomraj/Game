@@ -110,7 +110,7 @@ export default class ChooseAnswer extends Component {
           );
         });
     } catch (error) {
-      alert(error);
+      alert("Problem Loading Page");
     }
   };
 
@@ -141,7 +141,7 @@ export default class ChooseAnswer extends Component {
                 style={{
                   fontSize: 14,
                   fontWeight: "bold",
-                  paddingHorizontal: 10,
+                  paddingHorizontal: 18,
                 }}
               >
                 {item.answer}
@@ -177,7 +177,7 @@ export default class ChooseAnswer extends Component {
         keys = k;
       }
 
-      console.log(player.val()[keys].point);
+      // console.log(player.val()[keys].point);
 
       await firebase
         .database()
@@ -185,11 +185,14 @@ export default class ChooseAnswer extends Component {
         .child(this.state.gameID)
         .child("players")
         .child(keys)
-        .update({ point: player.val()[keys].point + 1 });
+        .update({
+          point: player.val()[keys].point + 1,
+          score: player.val()[keys].score + 1,
+        });
 
       this.setState({ picked: true });
     } catch (error) {
-      alert(error);
+      alert("Problem Loading Page");
     }
   };
 

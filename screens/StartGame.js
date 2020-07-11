@@ -51,8 +51,8 @@ export default class StartGame extends Component {
       playersMap.set(players[i].userKey, players[i]);
     }
 
-    console.log(admin);
-    console.log(userKey);
+    // console.log(admin);
+    // console.log(userKey);
 
     this.setState(
       {
@@ -132,7 +132,7 @@ export default class StartGame extends Component {
           }
         });
     } catch (error) {
-      alert("ERROR 1 " + error);
+      alert("Problem Loading Page");
     }
   };
 
@@ -153,7 +153,7 @@ export default class StartGame extends Component {
           this.setState({ players: playersList });
         });
     } catch (error) {
-      alert("ERROR 2 " + error);
+      alert("Problem Loading Page");
     }
   };
 
@@ -191,7 +191,7 @@ export default class StartGame extends Component {
           );
       }
     } catch (error) {
-      alert("ERROR 3 " + error);
+      alert("Problem Loading Page");
     }
   };
 

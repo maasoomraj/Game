@@ -33,9 +33,9 @@ export default class AnswerState extends Component {
     const playerID = navigation.getParam("playerID");
     const admin = navigation.getParam("admin");
 
-    console.log(store.getState().user);
-    console.log("admin");
-    console.log(admin);
+    // console.log(store.getState().user);
+    // console.log("admin");
+    // console.log(admin);
 
     this.setState(
       {
@@ -52,7 +52,7 @@ export default class AnswerState extends Component {
       }
     );
 
-    console.log(playersAnswered);
+    // console.log(playersAnswered);
 
     BackHandler.addEventListener(
       "hardwareBackPress",
@@ -76,7 +76,7 @@ export default class AnswerState extends Component {
 
   changesMade = async () => {
     try {
-      console.log(this.state.gameID);
+      // console.log(this.state.gameID);
       await firebase
         .database()
         .ref("game")
@@ -99,7 +99,7 @@ export default class AnswerState extends Component {
           );
         });
     } catch (error) {
-      alert(error);
+      alert("Problem Loading Page");
     }
   };
 
@@ -111,8 +111,8 @@ export default class AnswerState extends Component {
       }
     }
 
-    console.log(this.state.user.name);
-    console.log(numberOfAnswers);
+    // console.log(this.state.user.name);
+    // console.log(numberOfAnswers);
     if (numberOfAnswers === this.state.players.length) {
       this.props.navigation.navigate("ChooseAnswer", {
         players: this.state.players,

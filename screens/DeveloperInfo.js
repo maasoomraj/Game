@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { View, Text, StatusBar, Image, BackHandler } from "react-native";
+import {
+  View,
+  Text,
+  StatusBar,
+  Image,
+  BackHandler,
+  Linking,
+  TouchableOpacity,
+} from "react-native";
 
 export default class DeveloperInfo extends Component {
   constructor(props) {
@@ -77,7 +85,12 @@ export default class DeveloperInfo extends Component {
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           ></View>
-          <View
+          <TouchableOpacity
+            onPress={() =>
+              Linking.openURL(
+                "https://www.linkedin.com/in/masoom-raj-b4857517b/"
+              )
+            }
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
             <Image
@@ -85,8 +98,13 @@ export default class DeveloperInfo extends Component {
               color="eee"
               style={{ width: 40, height: 40 }}
             />
-          </View>
-          <View
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              Linking.openURL(
+                "https://www.facebook.com/profile.php?id=100008575125905"
+              )
+            }
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
             <Image
@@ -94,8 +112,11 @@ export default class DeveloperInfo extends Component {
               color="eee"
               style={{ width: 40, height: 40 }}
             />
-          </View>
-          <View
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              Linking.openURL("https://www.instagram.com/maasoomraj/?hl=en")
+            }
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
             <Image
@@ -103,7 +124,7 @@ export default class DeveloperInfo extends Component {
               color="eee"
               style={{ width: 40, height: 40 }}
             />
-          </View>
+          </TouchableOpacity>
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           ></View>

@@ -73,7 +73,7 @@ export default class LoginScreen extends Component {
           );
 
         if (response) {
-          console.log(name);
+          // console.log(name);
           await firebase
             .auth()
             .currentUser.updateProfile({ displayName: name });
@@ -81,7 +81,7 @@ export default class LoginScreen extends Component {
         }
       } catch (error) {
         this.setState({ isLoading: false });
-        console.log(error);
+        // console.log(error);
         if (error.code == "auth/email-already-in-use") {
           alert("User already exists. Try logging in");
           return;
@@ -95,7 +95,7 @@ export default class LoginScreen extends Component {
           return;
         }
         // alert("Problem in signing user. Please try again.");
-        alert(error);
+        alert("Problem Loading Page");
       }
     } else {
       alert("Enter details to signup");

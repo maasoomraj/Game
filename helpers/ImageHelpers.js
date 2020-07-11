@@ -10,7 +10,7 @@ const prepareBlob = async (imageUri) => {
 
     // On error, throw error
     xml.onerror = function (error) {
-      console.log(error);
+      // console.log(error);
       reject(new TypeError("Image Upload Failed"));
     };
 
@@ -21,7 +21,7 @@ const prepareBlob = async (imageUri) => {
     // send the blob
     xml.send();
   });
-  console.log(blob);
+  // console.log(blob);
   return blob;
 };
 

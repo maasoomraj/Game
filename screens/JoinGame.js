@@ -101,10 +101,10 @@ export default class JoinGame extends Component {
         playersMap.set(players[i].userKey, players[i]);
       }
 
-      console.log(players);
-      console.log("MAP");
-      console.log(playersMap);
-      console.log(this.state.user.key);
+      // console.log(players);
+      // console.log("MAP");
+      // console.log(playersMap);
+      // console.log(this.state.user.key);
 
       let playerID;
       if (!playersMap.has(key)) {
@@ -139,6 +139,7 @@ export default class JoinGame extends Component {
             point: 0,
             picked: false,
             photo: this.state.user.photoURL || "",
+            score: 0,
           });
       } else {
         playerID = playersMap.get(this.state.user.key).key;
@@ -155,7 +156,7 @@ export default class JoinGame extends Component {
       });
     } catch (error) {
       this.setState({ isLoading: false });
-      alert(error);
+      alert("Problem Loading Page");
     }
   };
 

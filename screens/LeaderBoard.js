@@ -34,10 +34,10 @@ export default class LeaderBoard extends Component {
     const gameID = navigation.getParam("gameID");
     const playerID = navigation.getParam("playerID");
     const admin = navigation.getParam("admin");
-    console.log("LEADERBOARD");
-    console.log(store.getState().user);
-    console.log("admin");
-    console.log(admin);
+    // console.log("LEADERBOARD");
+    // console.log(store.getState().user);
+    // console.log("admin");
+    // console.log(admin);
 
     this.setState(
       {
@@ -48,11 +48,13 @@ export default class LeaderBoard extends Component {
         playerID,
       },
       () => {
-        this.getCounter();
         this.changesMade();
-        this.makeChanges();
       }
     );
+
+    setTimeout(() => {
+      this.props.navigation.navigate("GameSelect");
+    }, 10000);
 
     BackHandler.addEventListener(
       "hardwareBackPress",
@@ -74,49 +76,49 @@ export default class LeaderBoard extends Component {
     }
   }
 
-  getCounter = async () => {
-    try {
-      const gameStatus = await firebase
-        .database()
-        .ref("game")
-        .child(this.state.gameID)
-        .child("gameStatus")
-        .once("value");
+  // getCounter = async () => {
+  //   try {
+  //     const gameStatus = await firebase
+  //       .database()
+  //       .ref("game")
+  //       .child(this.state.gameID)
+  //       .child("gameStatus")
+  //       .once("value");
 
-      console.log(gameStatus.val());
-      console.log(gameStatus.val().counter);
-      console.log(gameStatus.val().rounds);
-      await firebase
-        .database()
-        .ref("game")
-        .child(this.state.gameID)
-        .child("gameStatus")
-        .update({ counter: gameStatus.val().counter + 1 });
-      if (gameStatus.val().counter + 1 === gameStatus.val().rounds) {
-        console.log("FINAL");
-        setTimeout(() => {
-          this.props.navigation.navigate("FinalLeaderBoard", {
-            admin: this.state.admin,
-            gameID: this.state.gameID,
-            players: this.state.players,
-            playerID: this.state.playerID,
-          });
-        }, 5000);
-      } else {
-        console.log("CONTINUE ROUNDS");
-        setTimeout(() => {
-          this.props.navigation.navigate("GameScreen", {
-            admin: this.state.admin,
-            gameID: this.state.gameID,
-            players: this.state.players,
-            playerID: this.state.playerID,
-          });
-        }, 5000);
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
+  //     console.log(gameStatus.val());
+  //     console.log(gameStatus.val().counter);
+  //     console.log(gameStatus.val().rounds);
+  //     await firebase
+  //       .database()
+  //       .ref("game")
+  //       .child(this.state.gameID)
+  //       .child("gameStatus")
+  //       .update({ counter: gameStatus.val().counter + 1 });
+  //     if (gameStatus.val().counter + 1 === gameStatus.val().rounds) {
+  //       console.log("FINAL");
+  //       setTimeout(() => {
+  //         this.props.navigation.navigate("FinalLeaderBoard", {
+  //           admin: this.state.admin,
+  //           gameID: this.state.gameID,
+  //           players: this.state.players,
+  //           playerID: this.state.playerID,
+  //         });
+  //       }, 5000);
+  //     } else {
+  //       console.log("CONTINUE ROUNDS");
+  //       setTimeout(() => {
+  //         this.props.navigation.navigate("GameScreen", {
+  //           admin: this.state.admin,
+  //           gameID: this.state.gameID,
+  //           players: this.state.players,
+  //           playerID: this.state.playerID,
+  //         });
+  //       }, 5000);
+  //     }
+  //   } catch (error) {
+  //     alert(error);
+  //   }
+  // };
 
   changesMade = async () => {
     try {
@@ -138,27 +140,28 @@ export default class LeaderBoard extends Component {
           });
         });
     } catch (error) {
-      alert(error);
+      alert("Problem Loading Page");
     }
   };
 
-  makeChanges = async () => {
-    try {
-      await firebase
-        .database()
-        .ref("game")
-        .child(this.state.gameID)
-        .child("players")
-        .child(this.state.playerID)
-        .update({
-          picked: false,
-          answer: "",
-          answered: false,
-        });
-    } catch (error) {
-      alert(error);
-    }
-  };
+  // makeChanges = async () => {
+  //   try {
+  //     await firebase
+  //       .database()
+  //       .ref("game")
+  //       .child(this.state.gameID)
+  //       .child("players")
+  //       .child(this.state.playerID)
+  //       .update({
+  //         picked: false,
+  //         answer: "",
+  //         answered: false,
+  //         score: 0,
+  //       });
+  //   } catch (error) {
+  //     alert(error);
+  //   }
+  // };
 
   maxValue = 0;
 
@@ -176,7 +179,7 @@ export default class LeaderBoard extends Component {
       }
     }
 
-    console.log(winner + " " + index);
+    // console.log(winner + " " + index);
     return (
       // <TouchableOpacity onPress={() => this.submit(item)}>
       <View
@@ -296,7 +299,7 @@ export default class LeaderBoard extends Component {
         style={{
           flex: 1,
           paddingTop: StatusBar.currentHeight,
-          backgroundColor: "#130B21",
+          backgroundColor: "#280C09",
         }}
       >
         <View
@@ -311,9 +314,9 @@ export default class LeaderBoard extends Component {
         >
           <Text
             style={{
-              fontSize: 22,
+              fontSize: 26,
               fontWeight: "bold",
-              color: "#EC3D6C",
+              color: "#4BAFA8",
               paddingHorizontal: 10,
             }}
           >
@@ -338,7 +341,7 @@ export default class LeaderBoard extends Component {
           }}
         >
           <Text style={{ color: "#EC3D6C", fontSize: 16 }}>
-            Please Wait...we are processing !
+            Hope you liked the game !
           </Text>
         </View>
       </View>

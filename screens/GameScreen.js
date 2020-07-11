@@ -35,10 +35,10 @@ export default class GameScreen extends Component {
     const players = navigation.getParam("players");
     const playerID = navigation.getParam("playerID");
 
-    console.log("USERS");
-    console.log(store.getState().user);
-    console.log("admin");
-    console.log(admin);
+    // console.log("USERS");
+    // console.log(store.getState().user);
+    // console.log("admin");
+    // console.log(admin);
 
     this.setState(
       {

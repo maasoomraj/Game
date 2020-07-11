@@ -90,7 +90,7 @@ export default class LeaderBoard extends Component {
           });
         });
     } catch (error) {
-      alert(error);
+      alert("Problem Loading Page");
     }
   };
 
