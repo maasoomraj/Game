@@ -31,7 +31,7 @@ export default class CreateGame extends Component {
   componentDidMount = () => {
     // const { navigation } = this.props;
     // const user = navigation.getParam("user");
-    const rounds = [5, 10, 15, 20];
+    const rounds = [5, 8, 12, 15];
     this.setState({ user: store.getState().user, rounds });
 
     BackHandler.addEventListener("hardwareBackPress", () =>

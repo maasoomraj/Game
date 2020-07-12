@@ -9,6 +9,7 @@ import {
   BackHandler,
 } from "react-native";
 import { MaterialIndicator } from "react-native-indicators";
+import CheckBox from "react-native-check-box";
 
 import * as firebase from "firebase/app";
 require("firebase/auth");
@@ -25,6 +26,8 @@ export default class LoginScreen extends Component {
       password: "",
       confirmPassword: "",
       isLoading: false,
+      privacy: false,
+      terms: false,
     };
   }
 
@@ -59,6 +62,16 @@ export default class LoginScreen extends Component {
     ) {
       if (!(this.state.password === this.state.confirmPassword)) {
         alert("Password doesnot matches.");
+        return;
+      }
+
+      if (!this.state.privacy) {
+        alert("You need to agree to Privacy Policy");
+        return;
+      }
+
+      if (!this.state.terms) {
+        alert("You need to agree to Terms and Conditions");
         return;
       }
 
@@ -214,9 +227,53 @@ export default class LoginScreen extends Component {
               color: "#EC3D6C",
             }}
           />
+
+          {/* checkbox */}
+          <View style={{ flexDirection: "row", marginLeft: 20 }}>
+            <CheckBox
+              isChecked={this.state.terms}
+              onClick={() => this.setState({ terms: !this.state.terms })}
+              checkBoxColor="#eee"
+              style={{ marginLeft: 20 }}
+            />
+            <Text style={{ color: "#eee", paddingLeft: 20, fontSize: 16 }}>
+              I agree to
+            </Text>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("Terms")}
+            >
+              <Text style={{ color: "#EC3D6C", fontSize: 16 }}>
+                {" "}
+                Terms and Conditions
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* checkbox */}
+          <View style={{ flexDirection: "row", marginLeft: 20, marginTop: 10 }}>
+            <CheckBox
+              isChecked={this.state.privacy}
+              onClick={() => this.setState({ privacy: !this.state.privacy })}
+              checkBoxColor="#eee"
+              style={{ marginLeft: 20 }}
+            />
+            <Text style={{ color: "#eee", paddingLeft: 20, fontSize: 16 }}>
+              I agree to
+            </Text>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("PrivacyPolicy")}
+            >
+              <Text style={{ color: "#EC3D6C", fontSize: 16 }}>
+                {" "}
+                Privacy Policy
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Signup */}
           <View
             style={{
-              marginTop: 10,
+              marginTop: 20,
               alignItems: "center",
               justifyContent: "center",
             }}

@@ -276,7 +276,7 @@ export default class JoinGame extends Component {
           }}
         >
           <Text style={{ color: "#EC3D6C", fontSize: 16 }}>
-            Donot have a Game Code -{" "}
+            Do not have a Game Code -{" "}
           </Text>
           <TouchableOpacity
             onPress={() =>

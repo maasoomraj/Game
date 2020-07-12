@@ -53,7 +53,7 @@ const questions = (name, number) => {
     case 25:
       return `Who was ${name}'s longest secret crush?  ?`;
     case 26:
-      return `When did ${name} smoked for first time ?`;
+      return `When did ${name} smoke for the first time ?`;
     case 27:
       return `When did ${name} got drunk for first time ?`;
     case 28:
@@ -61,9 +61,9 @@ const questions = (name, number) => {
     case 29:
       return `Money or love , what will ${name} choose ?`;
     case 30:
-      return `Whom will ${name} kill and why ?`;
+      return `Whom would ${name} want to kill and why ?`;
     case 31:
-      return `What is ${name}'s personal goals ?`;
+      return `What are ${name}'s personal goals ?`;
     case 32:
       return `What makes ${name} insecure ?`;
     case 33:
@@ -83,31 +83,31 @@ const questions = (name, number) => {
     case 40:
       return `What's the most embarrassing thing ${name} has ever done to get a crush's attention ?`;
     case 41:
-      return `When did ${name} had his first kiss ?`;
+      return `When did ${name} have his/her first kiss ?`;
     case 42:
       return `If ${name} is double texting, who would they be ?`;
     case 43:
-      return `Have ${name} ever cheated someone?`;
+      return `Has ${name} ever cheated someone?`;
     case 44:
-      return `What's ${name} biggest regret ?`;
+      return `What's ${name}'s biggest regret ?`;
     case 45:
-      return `What's ${name} dream date night ?`;
+      return `What's ${name}'s dream date night ?`;
     case 46:
-      return `If ${name} life was a movie, what would it be called ?`;
+      return `If ${name}'s life was a movie, what would it be called ?`;
     case 47:
       return `What's the most cringeworthy outfit ${name} has ever worn ?`;
     case 48:
       return `If ${name} could be any animal, what would he/she be ?`;
     case 49:
-      return `A song which depicts ${name} life would be ?`;
+      return `A song which depicts ${name}'s life would be ?`;
     case 50:
       return `What's the worst lie ${name} would have ever told his/her parents ?`;
     case 51:
-      return `What attracts ${name} to people ?`;
+      return `What does ${name} find attractive about a person ?`;
     case 52:
-      return `If ${name} were a superhero, what kind of secret identity would he/she have ?`;
+      return `If ${name} were a superhero, what kind of secret power would he/she have ?`;
     case 53:
-      return `What’s the biggest doubt ${name} have ?`;
+      return `What’s the biggest doubt ${name} has ?`;
     case 54:
       return `What childish thing does ${name} still enjoy ?`;
     case 55:
@@ -115,11 +115,11 @@ const questions = (name, number) => {
     case 56:
       return `What movie do you think ${name}'s life is more like ?`;
     case 57:
-      return `What is the most useless thing ${name} know how to do ?`;
+      return `What is the most useless thing ${name} knows how to do ?`;
     case 58:
-      return `What’s the best thing about being ${name} being male/female ?`;
+      return `What’s the best thing about ${name} being male/female ?`;
     case 59:
-      return `What’s the worst thing about being ${name} being male/female ?`;
+      return `What’s the worst thing about ${name} being male/female ?`;
     case 60:
       return `What is something about ${name} that most people get wrong ?`;
     case 61:
@@ -131,9 +131,9 @@ const questions = (name, number) => {
     case 64:
       return `What are the things ${name} is tired of hearing about ?`;
     case 65:
-      return `What does ${name} think he/she know a lot about but probably don’t ?`;
+      return `What does ${name} think he/she know a lot about but probably doesn’t ?`;
     case 66:
-      return `What’s ${name} worst customer service story, either as the customer or as the employee ?`;
+      return `What’s ${name}'s worst customer service story, either as the customer or as the employee ?`;
     case 67:
       return `If ${name} had to choose one cause to dedicate his/her life to, what would that cause be ?`;
     case 68:
@@ -141,13 +141,13 @@ const questions = (name, number) => {
     case 69:
       return `If ${name} dies today, what would his/her biggest regret be ?`;
     case 70:
-      return `What stories from his/her life will ${name} tell his/her children about (assuming ${name} have children) ?`;
+      return `What stories from his/her life will ${name} tell his/her children about (assuming ${name} has children) ?`;
     case 71:
       return `If ${name} could become the number one expert in any one field, what would it be ?`;
     case 72:
-      return `If ${name} is day dreaming, what would be it about ?`;
+      return `If ${name} is day dreaming, what would it be about ?`;
     case 73:
-      return `What was ${name} biggest mistake in history ?`;
+      return `What was ${name}'s biggest mistake in history ?`;
     case 74:
       return `What are the things ${name} will never spend money on ?`;
     case 75:
@@ -159,7 +159,7 @@ const questions = (name, number) => {
     case 78:
       return `What is the thing ${name} is so incredibly terrible at, that he/she has given up ever doing it again ?`;
     case 79:
-      return `If ${name} could add 4 hours to his/her day, what would he/she spend that 4 hours doing ?`;
+      return `If ${name} could add 4 hours to his/her day, what would he/she spend those 4 hours doing ?`;
     case 80:
       return `What’s your funniest memory about ${name} ?`;
     case 81:
@@ -169,9 +169,9 @@ const questions = (name, number) => {
     case 83:
       return `What makes ${name} special and unique ?`;
     case 84:
-      return `What would be the last movie ${name} would like to see before he/she die ?`;
+      return `What would be the last movie ${name} would like to see before he/she dies ?`;
     case 85:
-      return `What’s ${name} best one-liner ?`;
+      return `What’s ${name}'s best one-liner ?`;
     case 86:
       return `What’s the worst injury ${name} ever got ?`;
     case 87:
@@ -185,9 +185,9 @@ const questions = (name, number) => {
     case 91:
       return `What’s the first thing ${name} would do if he/she were invisible ?`;
     case 92:
-      return `Have ${name} ever been hinted by someone of the same sex ?`;
+      return `Has ${name} ever been hinted by someone of the same sex ?`;
     case 93:
-      return `Have ${name} ever been hinted by someone of the opposite sex ? What did he/she do next ?`;
+      return `Has ${name} ever been hinted by someone of the opposite sex ? What did he/she do next ?`;
     case 94:
       return `Has ${name} ever given hint to someone of the same sex ?`;
     case 95:
@@ -195,11 +195,11 @@ const questions = (name, number) => {
     case 96:
       return `Who is the one in the group who wants to party 24/7 ?`;
     case 97:
-      return `Who is the one in the group who overshare every aspect of his/her life ?`;
+      return `Who is the one in the group who overshares every aspect of his/her life ?`;
     case 98:
-      return `Who is the the mumma of the group ?`;
+      return `Who is the mumma of the group ?`;
     case 99:
-      return `If this group is a PUBG squad, who is the bot-killer ?`;
+      return `Who is the rondu in the group ?`;
     case 100:
       return `Who is the absolute mess ?`;
     case 101:

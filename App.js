@@ -20,6 +20,9 @@ import DeveloperInfo from "./screens/DeveloperInfo";
 import EditDetails from "./screens/EditDetails";
 import ChangePassword from "./screens/ChangePassword";
 import ScoreBoard from "./screens/ScoreBoard";
+import PrivacyPolicy from "./screens/PrivacyPolicy";
+import Terms from "./screens/Terms";
+import Help from "./screens/Help";
 
 class App extends React.Component {
   constructor() {
@@ -53,6 +56,9 @@ const AppSwitchNavigator = createSwitchNavigator({
   EditDetails,
   ChangePassword,
   ScoreBoard,
+  PrivacyPolicy,
+  Terms,
+  Help,
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);

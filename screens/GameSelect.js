@@ -80,8 +80,14 @@ export default class MainScreen extends Component {
             height: 160,
           }}
         >
-          <Text style={{ fontSize: 26, fontWeight: "bold", color: "#EC3D6C" }}>
-            Twisty Tale
+          <Text
+            style={{
+              fontSize: 26,
+              fontWeight: "bold",
+              color: "#EC3D6C",
+            }}
+          >
+            TeleGang
           </Text>
           {!this.state.user.photoURL ? (
             <Image
@@ -145,6 +151,15 @@ export default class MainScreen extends Component {
             colors={["#04062D", "#040D47", "#081869", "#0B2591", "#0D38A4"]}
             headerText={"Join Game"}
             subText={"Join to play with your friends"}
+          />
+
+          {/* Help */}
+          <GradientClickable
+            props={this.props}
+            nav={"Help"}
+            colors={["#525114", "#525114", "#938329", "#938329", "#BDA937"]}
+            headerText={"Help"}
+            subText={"Learn how to play the game"}
           />
 
           {/* Developer Info */}

@@ -1,4 +1,6 @@
+Name - TeleGang
+
 Short Description -
-Twisty Tale, group game where you answer some twisted questions about your group.
+Play to test your telepathy with your gang, and know what they think about you.
 
 Long Description -
