@@ -162,6 +162,22 @@ export default class MainScreen extends Component {
             subText={"Learn how to play the game"}
           />
 
+          {/* Feedback */}
+          <GradientClickable
+            props={this.props}
+            nav={"Feedback"}
+            colors={[
+              "#813419",
+              "#813419",
+              "#9E3F21",
+              "#BC4D29",
+              "#D95830",
+              "#E86235",
+            ]}
+            headerText={"Feedback"}
+            subText={"Suggest improvements and new questions"}
+          />
+
           {/* Developer Info */}
           <GradientClickable
             props={this.props}

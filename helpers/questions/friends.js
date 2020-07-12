@@ -214,6 +214,40 @@ const questions = (name, number) => {
       return `Who is the one who has a laugh that’s funnier than the actual joke ?`;
     case 106:
       return `Who is the most negative person in this group ?`;
+    case 107:
+      return `Who would love to swap his family with ${name}'s family ?`;
+    case 108:
+      return `Who is {name}'s hidden talent ?`;
+    case 109:
+      return `Who is {name}'s sexiest fantasy ?`;
+    case 110:
+      return `What are the three things ${name} cannot live without ?`;
+    case 111:
+      return `What will ${name} do if he/she becomes invisible ?`;
+    case 112:
+      return `What will ${name} do if his/her crush proposes her ?`;
+    case 113:
+      return `What would be ${name}'s wish if he/she dies tomorrow ?`;
+    case 114:
+      return `Who lights up ${name} ?`;
+    case 115:
+      return `Why is ${name} worth knowing ?`;
+    case 116:
+      return `What is ${name}'s signature dance move like ?`;
+    case 117:
+      return `If ${name} could make a rule and everyone has to follow it, what will it be ?`;
+    case 118:
+      return `If ${name} could make a day as national holiday, what day would it be and why ?`;
+    case 119:
+      return `If ${name} has unlimited storage of one thing, what would it be ?`;
+    case 120:
+      return `If ${name} could be an animal, which animal would it be ?`;
+    case 121:
+      return `What crazy name will you give to ${name}'s kid ?`;
+    case 122:
+      return `Every group has a moron, who is it in this group ?`;
+    case 123:
+      return `How do you think ${name} would die ?`;
     default:
       return `Who is the rondu in the group ?`;
   }

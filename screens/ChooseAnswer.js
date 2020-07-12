@@ -32,6 +32,7 @@ export default class ChooseAnswer extends Component {
     const gameID = navigation.getParam("gameID");
     const playerID = navigation.getParam("playerID");
     const admin = navigation.getParam("admin");
+    const question = navigation.getParam("question");
 
     let shuffledPlayers = players.sort(() => Math.random() - 0.5);
 
@@ -43,6 +44,7 @@ export default class ChooseAnswer extends Component {
         user: store.getState().user,
         gameID,
         playerID,
+        question,
       },
       () => {
         this.changesMade();
@@ -125,7 +127,7 @@ export default class ChooseAnswer extends Component {
               margin: 10,
               borderColor: "#000",
               borderWidth: 0.4,
-              minHeight: 50,
+              minHeight: 70,
               backgroundColor: "#99EE99",
               borderRadius: 30,
             }}
@@ -139,9 +141,10 @@ export default class ChooseAnswer extends Component {
             >
               <Text
                 style={{
-                  fontSize: 14,
+                  fontSize: 16,
                   fontWeight: "bold",
-                  paddingHorizontal: 18,
+                  paddingHorizontal: 30,
+                  paddingVertical: 20,
                 }}
               >
                 {item.answer}
@@ -245,7 +248,19 @@ export default class ChooseAnswer extends Component {
               paddingHorizontal: 10,
             }}
           >
-            Pick an answer -
+            {this.state.question}
+          </Text>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+              color: "#eee",
+              paddingHorizontal: 10,
+              fontStyle: "italic",
+              paddingVertical: 10,
+            }}
+          >
+            (Choose the best answer)
           </Text>
         </View>
         <FlatList

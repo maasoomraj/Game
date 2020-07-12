@@ -23,6 +23,7 @@ import ScoreBoard from "./screens/ScoreBoard";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
 import Terms from "./screens/Terms";
 import Help from "./screens/Help";
+import Feedback from "./screens/Feedback";
 
 class App extends React.Component {
   constructor() {
@@ -59,6 +60,7 @@ const AppSwitchNavigator = createSwitchNavigator({
   PrivacyPolicy,
   Terms,
   Help,
+  Feedback,
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);

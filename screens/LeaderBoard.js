@@ -337,11 +337,13 @@ export default class LeaderBoard extends Component {
             marginBottom: 30,
             justifyContent: "center",
             alignItems: "center",
-            flexDirection: "row",
           }}
         >
           <Text style={{ color: "#EC3D6C", fontSize: 16 }}>
             Hope you liked the game !
+          </Text>
+          <Text style={{ color: "#eee", fontSize: 14 }}>
+            Please Share your feedback
           </Text>
         </View>
       </View>

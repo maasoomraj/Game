@@ -51,17 +51,17 @@ export default class PrivacyPolicy extends Component {
           <Text style={styles.bold}>Privacy Policy</Text>
           <Text style={styles.text}>
             Masoom Raj built the TeleGang app as a Free app. This SERVICE is
-            provided by Masoom Raj at no cost and is intended for use as is.
-            This page is used to inform visitors regarding my policies with the
-            collection, use, and disclosure of Personal Information if anyone
-            decided to use my Service. If you choose to use my Service, then you
-            agree to the collection and use of information in relation to this
-            policy. The Personal Information that I collect is used for
-            providing and improving the Service. I will not use or share your
-            information with anyone except as described in this Privacy Policy.
-            The terms used in this Privacy Policy have the same meanings as in
-            our Terms and Conditions, which is accessible at TeleGang unless
-            otherwise defined in this Privacy Policy.
+            provided by Masoom Raj privately at no cost and is intended for use
+            as is. This page is used to inform visitors regarding the policies
+            with the collection, use, and disclosure of Personal Information if
+            anyone decided to use the Service. If you choose to use the Service,
+            then you agree to the collection and use of information in relation
+            to this policy. The Personal Information that is collected is used
+            for providing and improving the Service. Masoom Raj will not use or
+            share your information with anyone except as described in this
+            Privacy Policy. The terms used in this Privacy Policy have the same
+            meanings as in our Terms and Conditions, which is accessible at
+            TeleGang unless otherwise defined in this Privacy Policy.
           </Text>
           <Text style={styles.bold}>Information Collection and Use</Text>
           <Text style={styles.text}>
@@ -73,7 +73,7 @@ export default class PrivacyPolicy extends Component {
             services that may collect information used to identify you. Link to
             privacy policy of third party service providers used by the app
             {"\n"}
-            {"\n"}• Google Play Services{"\n"}• Google Analytics for Firebase
+            {"\n"}• Google Analytics for Firebase
             {"\n"}• Expo
           </Text>
           <Text style={styles.bold}>Log Data</Text>
@@ -123,14 +123,15 @@ export default class PrivacyPolicy extends Component {
             or method of electronic storage is 100% secure and reliable, and I
             cannot guarantee its absolute security.
           </Text>
-          <Text style={styles.bold}>Links to Other Sites</Text>
+          <Text style={styles.bold}>Children’s Privacy</Text>
           <Text style={styles.text}>
-            This Service may contain links to other sites. If you click on a
-            third-party link, you will be directed to that site. Note that these
-            external sites are not operated by me. Therefore, I strongly advise
-            you to review the Privacy Policy of these websites. I have no
-            control over and assume no responsibility for the content, privacy
-            policies, or practices of any third-party sites or services.
+            These Services do not address anyone under the age of 12. I do not
+            knowingly collect personally identifiable information from children
+            under 12. In the case I discover that a child under 12 has provided
+            me with personal information, I immediately delete this from our
+            servers. If you are a parent or guardian and you are aware that your
+            child has provided us with personal information, please contact me
+            so that I will be able to do necessary actions.
           </Text>
           <Text style={styles.bold}>Changes to This Privacy Policy</Text>
           <Text style={styles.text}>
@@ -142,9 +143,8 @@ export default class PrivacyPolicy extends Component {
           <Text style={styles.bold}>Contact Us</Text>
           <Text style={styles.text}>
             If you have any questions or suggestions about my Privacy Policy, do
-            not hesitate to contact me at raj.8@iitj.ac.in. This privacy policy
-            page was created at privacypolicytemplate.net and modified/generated
-            by App Privacy Policy Generator
+            not hesitate to contact me at raj.8@iitj.ac.in /
+            maasoomraj@gmail.com
             {"\n"}
             {"\n"}
             {"\n"}

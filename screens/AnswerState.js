@@ -32,6 +32,7 @@ export default class AnswerState extends Component {
     const playersAnswered = navigation.getParam("playersAnswered");
     const playerID = navigation.getParam("playerID");
     const admin = navigation.getParam("admin");
+    const question = navigation.getParam("question");
 
     // console.log(store.getState().user);
     // console.log("admin");
@@ -45,6 +46,7 @@ export default class AnswerState extends Component {
         gameID,
         playersAnswered,
         playerID,
+        question,
       },
       () => {
         this.changesMade();
@@ -119,6 +121,7 @@ export default class AnswerState extends Component {
         gameID: this.state.gameID,
         playerID: this.state.playerID,
         admin: this.state.admin,
+        question: this.state.question,
       });
     }
   };

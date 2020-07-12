@@ -88,7 +88,7 @@ export default class GameScreen extends Component {
               this.state.players[
                 Math.floor(Math.random() * this.state.players.length)
               ].name,
-              Math.floor(Math.random() * 107)
+              Math.floor(Math.random() * 125)
             ),
           });
       } catch (error) {
@@ -156,6 +156,7 @@ export default class GameScreen extends Component {
           playersAnswered: this.state.playersAnswered,
           playerID: this.state.playerID,
           admin: this.state.admin,
+          question: this.state.question,
         })
       );
   };
