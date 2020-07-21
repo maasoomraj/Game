@@ -217,9 +217,9 @@ const questions = (name, number) => {
     case 107:
       return `Who would love to swap his family with ${name}'s family ?`;
     case 108:
-      return `Who is {name}'s hidden talent ?`;
+      return `Who is ${name}'s hidden talent ?`;
     case 109:
-      return `Who is {name}'s sexiest fantasy ?`;
+      return `Who is ${name}'s sexiest fantasy ?`;
     case 110:
       return `What are the three things ${name} cannot live without ?`;
     case 111:
