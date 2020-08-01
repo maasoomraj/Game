@@ -24,6 +24,7 @@ import PrivacyPolicy from "./screens/PrivacyPolicy";
 import Terms from "./screens/Terms";
 import Help from "./screens/Help";
 import Feedback from "./screens/Feedback";
+import UploadScreen from './screens/UploadScreen';
 
 class App extends React.Component {
   constructor() {
@@ -61,6 +62,7 @@ const AppSwitchNavigator = createSwitchNavigator({
   Terms,
   Help,
   Feedback,
+  UploadScreen
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);

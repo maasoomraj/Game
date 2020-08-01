@@ -387,26 +387,7 @@ export default class EditDetails extends Component {
               }}
               onPress={() => this.props.navigation.navigate("ChangePassword")}
             >
-              {/* <View
-              style={{
-                
-                flexDirection: "row",
-                
-                
-                
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            > */}
-              {/* Display Name */}
-              {/* <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  paddingHorizontal: 20,
-                }}
-              > */}
+
               <Text
                 style={{
                   fontSize: 22,
@@ -418,29 +399,6 @@ export default class EditDetails extends Component {
               >
                 Change Password
               </Text>
-              {/* </View> */}
-
-              {/* Change Username Button */}
-              {/* <View
-                style={{
-                  width: 80,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  paddingHorizontal: 20,
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate("ChangePassword")
-                  }
-                >
-                  <Image
-                    source={require("../assets/edit.png")}
-                    style={{ width: 30, height: 30 }}
-                  />
-                </TouchableOpacity>
-              </View> */}
-              {/* </View> */}
             </TouchableOpacity>
           </View>
         </View>

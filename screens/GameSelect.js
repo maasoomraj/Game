@@ -123,6 +123,16 @@ export default class MainScreen extends Component {
         </View>
 
         <ScrollView style={{ flex: 1 }}>
+
+        <GradientClickable
+            props={this.props}
+            nav={"UploadScreen"}
+            colors={["#0E1111", "#222A2A", "#343637", "#394249", "#3F484A"]}
+            headerText={"Upload Screen"}
+            subText={"upload images"}
+          />
+
+
           {/* Edit Details */}
           <GradientClickable
             props={this.props}
